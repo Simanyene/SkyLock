@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.RegisterPage"
+    Title="Register"
+    Style="{StaticResource WelcomePageStyle}">
+
+    <Grid>
+        <Image Source="welcome_background.png"
+               Style="{StaticResource WelcomeBackgroundStyle}" />
+
+        <BoxView Style="{StaticResource SignInOverlayStyle}" />
+
+        <ScrollView>
+            <VerticalStackLayout
+                Style="{StaticResource SignInLayoutStyle}">
+
+                <Label Text="SkyLock"
+                       Style="{StaticResource WelcomeLogoStyle}" />
+
+                <Label Text="Crack the code. Restore the control."
+                       Style="{StaticResource WelcomeTaglineStyle}" />
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Entry x:Name="txtGamerName"
+                           Placeholder="Gamer Name"
+                           MaxLength="20"
+                           Style="{StaticResource SignInEntryStyle}" />
+                </Border>
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Entry x:Name="txtEmail"
+                           Placeholder="Email"
+                           Keyboard="Email"
+                           Style="{StaticResource SignInEntryStyle}" />
+                </Border>
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Entry x:Name="txtPassword"
+                           Placeholder="Password"
+                           IsPassword="True"
+                           MaxLength="128"
+                           Style="{StaticResource SignInEntryStyle}" />
+                </Border>
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Entry x:Name="txtConfirmPassword"
+                           Placeholder="Confirm Password"
+                           IsPassword="True"
+                           MaxLength="128"
+                           Style="{StaticResource SignInEntryStyle}" />
+                </Border>
+
+                <Label x:Name="lblError"
+                       IsVisible="False"
+                       Style="{StaticResource SignInErrorStyle}" />
+
+                <Button x:Name="btnCreateAccount"
+        Text="Create Account"
+        Clicked="OnCreateAccountClicked"
+        Style="{StaticResource WelcomeSignInStyle}" />
+
+                <Label Text="Already have an account?"
+                       Style="{StaticResource WelcomeTaglineStyle}" />
+
+                <Button x:Name="btnBackToSignIn"
+                        Text="Back to Sign In"
+                        Clicked="OnBackToSignInClicked"
+                         Style="{StaticResource SignInLinkStyle}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

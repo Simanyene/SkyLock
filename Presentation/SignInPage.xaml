@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.SignInPage"
+    Title="Sign In"
+    Style="{StaticResource WelcomePageStyle}">
+   
+
+        <Grid>
+            <Image Source="welcome_background.png"
+               Style="{StaticResource WelcomeBackgroundStyle}" />
+
+            <BoxView Style="{StaticResource SignInOverlayStyle}" />
+
+            <ScrollView>
+                <VerticalStackLayout Style="{StaticResource SignInLayoutStyle}">
+
+                    <Label Text="SkyLock"
+                       Style="{StaticResource WelcomeLogoStyle}" />
+
+                    <Label Text="Crack the code. Restore the control."
+                       Style="{StaticResource WelcomeTaglineStyle}" />
+
+                    <Border Style="{StaticResource SignInFieldStyle}">
+                        <Entry x:Name="txtEmail"
+                           Placeholder="Email"
+                           Keyboard="Email"
+                           ReturnType="Next"
+                           Completed="OnEmailCompleted"
+                           TextChanged="OnInputChanged"
+                           Style="{StaticResource SignInEntryStyle}" />
+                    </Border>
+
+                    <Border Style="{StaticResource SignInFieldStyle}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry x:Name="txtPassword"
+                               Placeholder="Password"
+                               IsPassword="True"
+                               ReturnType="Done"
+                               TextChanged="OnInputChanged"
+                               Style="{StaticResource SignInEntryStyle}" />
+
+                            <Button Grid.Column="1"
+                                x:Name="btnShowPassword"
+                                Text="Show"
+                                Clicked="OnShowPasswordClicked"
+                                Style="{StaticResource SignInLinkStyle}" />
+                        </Grid>
+                    </Border>
+
+                    <HorizontalStackLayout>
+                    <CheckBox x:Name="chkRememberEmail"
+          SemanticProperties.Description="Remember my email"
+          Style="{StaticResource SignInCheckBoxStyle}" />
+
+                    <Label Text="Remember my email"
+                           Style="{StaticResource SignInRememberStyle}" />
+                    </HorizontalStackLayout>
+
+                    <Label x:Name="lblError"
+                       IsVisible="False"
+                       Style="{StaticResource SignInErrorStyle}" />
+
+                    <Button Text="Sign In"
+                        Clicked="OnSignInClicked"
+                        Style="{StaticResource WelcomeSignInStyle}" />
+
+                    <Button Text="Forgot Password?"
+                        Clicked="OnForgotPasswordClicked"
+                        Style="{StaticResource SignInLinkStyle}" />
+
+                    <Button Text="Register New Account"
+                        Clicked="OnRegisterClicked"
+                        Style="{StaticResource SignInLinkStyle}" />
+
+                    <Button Text="Back to Welcome"
+                        Clicked="OnBackClicked"
+                        Style="{StaticResource WelcomeGuestStyle}" />
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage>

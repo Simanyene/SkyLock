@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.DifficultyPage"
+    Title="Select Difficulty"
+    Style="{StaticResource WelcomePageStyle}">
+
+    <Grid RowDefinitions="Auto,*"
+          Style="{StaticResource DifficultyLayoutStyle}">
+
+        <Button Grid.Row="0"
+        Text="Back"
+        Clicked="OnBackClicked"
+        SemanticProperties.Description="Back to Home"
+        Style="{StaticResource BackButtonStyle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Style="{StaticResource DifficultyCardsStyle}">
+
+                <Label Text="Select Difficulty"
+                       Style="{StaticResource DifficultyTitleStyle}" />
+
+                <!-- Easy -->
+                <Border x:Name="brdEasy"
+                        Style="{StaticResource DifficultyEasyStyle}">
+                    
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEasyTapped" />
+                    </Border.GestureRecognizers>
+                    
+                    <Grid ColumnDefinitions="Auto,*"
+                          Style="{StaticResource DifficultyCardGridStyle}">
+
+                        <Label Text="▂▅█"
+                               Style="{StaticResource DifficultyIconStyle}" />
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Easy"
+                                   Style="{StaticResource DifficultyNameStyle}" />
+
+                            <Label Text="3 digits · 7 minutes"
+                                   Style="{StaticResource DifficultyDetailStyle}" />
+
+                            <Label Text="More time to think"
+                                   Style="{StaticResource DifficultyDetailStyle}" />
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </Border>
+
+                <!-- Medium -->
+                <Border x:Name="brdMedium"
+                        Style="{StaticResource DifficultyMediumStyle}">
+                    
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMediumTapped" />
+                    </Border.GestureRecognizers>
+                    
+                    <Grid ColumnDefinitions="Auto,*"
+                          Style="{StaticResource DifficultyCardGridStyle}">
+
+                        <Label Text="▂▅█"
+                               Style="{StaticResource DifficultyIconStyle}" />
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Medium"
+                                   Style="{StaticResource DifficultyNameStyle}" />
+
+                            <Label Text="4 digits · 4 minutes"
+                                   Style="{StaticResource DifficultyDetailStyle}" />
+
+                            <Label Text="A greater challenge"
+                                   Style="{StaticResource DifficultyDetailStyle}" />
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </Border>
+
+                <!-- Hard -->
+                <Border x:Name="brdHard"
+                        Style="{StaticResource DifficultyHardStyle}">
+                    
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHardTapped" />
+                    </Border.GestureRecognizers>
+                    
+                    <Grid ColumnDefinitions="Auto,*"
+                          Style="{StaticResource DifficultyCardGridStyle}">
+
+                        <Label Text="▂▅█"
+                               Style="{StaticResource DifficultyIconStyle}" />
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Hard"
+                                   Style="{StaticResource DifficultyNameStyle}" />
+
+                            <Label Text="5 digits · 2 minutes"
+                                   Style="{StaticResource DifficultyDetailStyle}" />
+
+                            <Label Text="For expert players"
+                                   Style="{StaticResource DifficultyDetailStyle}" />
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </Border>
+
+                <Button x:Name="btnStartFlight"
+        Text="Start Flight"
+        Clicked="OnStartFlightClicked"
+        Style="{StaticResource WelcomeSignInStyle}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

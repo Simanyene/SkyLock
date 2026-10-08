@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.HowToPlayPage"
+    Title="How to Play"
+    Style="{StaticResource WelcomePageStyle}">
+
+    <Grid RowDefinitions="Auto,*"
+          Style="{StaticResource HowToPlayLayoutStyle}">
+
+        <Button x:Name="btnBack"
+                Grid.Row="0"
+                Text="Back"
+                Clicked="OnBackClicked"
+                Style="{StaticResource BackButtonStyle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Style="{StaticResource HowToPlayStepsStyle}">
+
+                <Label x:Name="lblPageTitle"
+                       Text="How to Play"
+                       Style="{StaticResource DifficultyTitleStyle}" />
+
+                <Label x:Name="lblGameGoal"
+                       Text="Your mission: crack the secret code and restore flight control before time runs out."
+                       Style="{StaticResource WelcomeTaglineStyle}" />
+
+                <!-- Step 1 -->
+                <Border Style="{StaticResource HowToPlayCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource HowToPlayCardContentStyle}">
+
+                        <Label x:Name="lblStepOneHeading"
+                               Text="1. Choose your flight"
+                               Style="{StaticResource HowToPlayStepHeadingStyle}" />
+
+                        <Label x:Name="lblStepOneInstructions"
+                               Text="From Home, tap Start Flight. Select a difficulty, then tap Start Flight again to begin."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                        <Label x:Name="lblDifficultyDetails"
+                               Text="Easy: 3 digits • 7 minutes&#10;Medium: 4 digits • 4 minutes&#10;Hard: 5 digits • 2 minutes"
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Step 2 -->
+                <Border Style="{StaticResource HowToPlayCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource HowToPlayCardContentStyle}">
+
+                        <Label x:Name="lblStepTwoHeading"
+                               Text="2. Enter your guess"
+                               Style="{StaticResource HowToPlayStepHeadingStyle}" />
+
+                        <Label x:Name="lblStepTwoInstructions"
+                               Text="Tap the number buttons to fill the code boxes. Use a different digit in each box. The first digit cannot be zero."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                        <Label x:Name="lblGuessExample"
+                               Text="[ 8 ]   [ 5 ]   [ 6 ]"
+                               Style="{StaticResource HowToPlayExampleStyle}" />
+
+                        <Label x:Name="lblDeleteInstructions"
+                               Text="Made a mistake? Tap Delete to remove the last digit."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Step 3 -->
+                <Border Style="{StaticResource HowToPlayCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource HowToPlayCardContentStyle}">
+
+                        <Label x:Name="lblStepThreeHeading"
+                               Text="3. Submit your code"
+                               Style="{StaticResource HowToPlayStepHeadingStyle}" />
+
+                        <Label x:Name="lblStepThreeInstructions"
+                               Text="When all the boxes are filled, tap Enter. The game checks your guess and shows your hits and matches."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Step 4 -->
+                <Border Style="{StaticResource HowToPlayCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource HowToPlayCardContentStyle}">
+
+                        <Label x:Name="lblStepFourHeading"
+                               Text="4. Read the clues"
+                               Style="{StaticResource HowToPlayStepHeadingStyle}" />
+
+                        <Label x:Name="lblHitMeaning"
+                               Text="HIT: A correct digit in the correct position."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                        <Label x:Name="lblMatchMeaning"
+                               Text="MATCH: A correct digit in the wrong position."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                        <Label x:Name="lblFeedbackExample"
+                               Text="Example secret: 5 8 6&#10;Example guess: 8 5 6&#10;&#10;1 HIT • 2 MATCHES"
+                               Style="{StaticResource HowToPlayExampleStyle}" />
+
+                        <Label x:Name="lblExampleExplanation"
+                               Text="The 6 is in the correct position. The 8 and 5 are in the code, but their positions are wrong."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Step 5 -->
+                <Border Style="{StaticResource HowToPlayCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource HowToPlayCardContentStyle}">
+
+                        <Label x:Name="lblStepFiveHeading"
+                               Text="5. Improve your next guess"
+                               Style="{StaticResource HowToPlayStepHeadingStyle}" />
+
+                        <Label x:Name="lblStepFiveInstructions"
+                               Text="Check your Guess History. Compare earlier guesses and their clues to decide which digits to change or move. The secret code stays the same throughout the round."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Step 6 -->
+                <Border Style="{StaticResource HowToPlayCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource HowToPlayCardContentStyle}">
+
+                        <Label x:Name="lblStepSixHeading"
+                               Text="6. Beat the timer"
+                               Style="{StaticResource HowToPlayStepHeadingStyle}" />
+
+                        <Label x:Name="lblStepSixInstructions"
+                               Text="Get every digit in the correct position before time runs out to win. If the timer reaches zero first, it is Game Over."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                        <Label x:Name="lblTimeWarningInstructions"
+                               Text="A warning appears during the final 30 seconds. Keep guessing—the timer continues running."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                        <Label x:Name="lblReplayInstructions"
+                               Text="After the round, check your results and choose Play Again to try a new code."
+                               Style="{StaticResource HowToPlayBodyStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

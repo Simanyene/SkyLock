@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkyLock.Presentation.LoadingPage"
+             Title="LoadingPage">
+    <Grid x:Name="grdLoadingPage">
+
+        <Image
+            x:Name="imgRunwayBackground"
+            Source="runway_background.png"
+            Style="{StaticResource LoadingBackgroundStyle}" />
+
+        <Grid
+            x:Name="grdLoadingContent"
+            Style="{StaticResource LoadingContentStyle}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="36" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="16" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label
+                x:Name="lblTitle"
+                Grid.Row="1"
+                Text="SkyLock"
+                Style="{StaticResource LoadingTitleStyle}" />
+
+            <Label
+                x:Name="lblTagline"
+                Grid.Row="2"
+                Text="Crack the code. Restore the control."
+                Style="{StaticResource LoadingTaglineStyle}" />
+
+            <Border
+                x:Name="brdLoadingTrack"
+                Grid.Row="4"
+                Style="{StaticResource LoadingTrackStyle}">
+
+                <Grid x:Name="grdLoadingTrack">
+                    <BoxView
+                        x:Name="bxvLoadingFill"
+                        Style="{StaticResource LoadingFillStyle}" />
+                </Grid>
+            </Border>
+
+            <Label
+                x:Name="lblLoadingStatus"
+                Grid.Row="5"
+                Text="Loading... 0%"
+                Style="{StaticResource LoadingTextStyle}" />
+
+            <Label
+                x:Name="lblVersion"
+                Grid.Row="7"
+                Text="v1.2.4"
+                Style="{StaticResource LoadingVersionStyle}" />
+
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkyLock.Presentation.WelcomePage"
+             Title="WelcomePage">
+ 
+
+        <Grid>
+
+
+              <Image Source="welcome_background.png"
+                 Style="{StaticResource WelcomeBackgroundStyle}" />
+
+            <Grid Style="{StaticResource WelcomeLayoutStyle}"
+              RowDefinitions="Auto,*,Auto">
+
+                <VerticalStackLayout
+                Grid.Row="0"
+                Style="{StaticResource WelcomeHeaderStyle}">
+
+                    <Label
+                    Text="SkyLock"
+                    Style="{StaticResource WelcomeLogoStyle}" />
+
+                    <Label
+                    Text="Crack the code. Restore the control."
+                    Style="{StaticResource WelcomeTaglineStyle}" />
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                Grid.Row="2"
+                Style="{StaticResource WelcomeButtonsStyle}">
+
+                    <Button
+                    Text="Sign In"
+                    Clicked="OnSignInClicked"
+                    Style="{StaticResource WelcomeSignInStyle}" />
+
+                    <Button
+                    Text="Continue as Guest"
+                    Clicked="OnGuestClicked"
+                    Style="{StaticResource WelcomeGuestStyle}" />
+
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+    </ContentPage>

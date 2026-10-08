@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:presentation="clr-namespace:SkyLock.Presentation"
+    x:Class="SkyLock.Presentation.GameplayPage"
+    Title="Flight"
+    Style="{StaticResource WelcomePageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Style="{StaticResource SignInLayoutStyle}">
+
+            <!-- Header -->
+            <Grid ColumnDefinitions="Auto,*,Auto">
+
+                <Button x:Name="btnPause"
+                        Text="Pause"
+                        Style="{StaticResource BackButtonStyle}" />
+
+                <Label x:Name="lblGameTitle"
+                       Grid.Column="1"
+                       Text="SkyLock"
+                       Style="{StaticResource DifficultyNameStyle}"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center" />
+
+                <Button x:Name="btnChat"
+                        Grid.Column="2"
+                        Text="Chat"
+                        Style="{StaticResource BackButtonStyle}" />
+
+            </Grid>
+
+            <!-- Flight information -->
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <VerticalStackLayout>
+
+                        <Label x:Name="lblAltitudeHeading"
+                               Text="ALTITUDE"
+                               Style="{StaticResource DifficultyDetailStyle}" />
+
+                        <Label x:Name="lblAltitude"
+                               Text="10,000 FT"
+                               Style="{StaticResource DifficultyNameStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource SignInFieldStyle}">
+                    <VerticalStackLayout>
+
+                        <Label x:Name="lblTimeHeading"
+                               Text="TIME LEFT"
+                               Style="{StaticResource DifficultyDetailStyle}" />
+
+                        <Label x:Name="lblTimeLeft"
+                               Text="07:00"
+                               Style="{StaticResource DifficultyNameStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!-- Warning during the final 30 seconds -->
+            <Grid Style="{StaticResource WarningSlotStyle}">
+                <presentation:WarningView
+                    x:Name="cvTimeWarning" />
+            </Grid>
+
+            <Label x:Name="lblCodeInstruction"
+                   Text="ENTER 3-DIGIT OVERRIDE"
+                   Style="{StaticResource WelcomeTaglineStyle}" />
+
+            <!-- Code boxes -->
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Spacing="8">
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Label x:Name="lblDigitOne"
+                           Text="_"
+                           Style="{StaticResource DifficultyNameStyle}" />
+                </Border>
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Label x:Name="lblDigitTwo"
+                           Text="_"
+                           Style="{StaticResource DifficultyNameStyle}" />
+                </Border>
+
+                <Border Style="{StaticResource SignInFieldStyle}">
+                    <Label x:Name="lblDigitThree"
+                           Text="_"
+                           Style="{StaticResource DifficultyNameStyle}" />
+                </Border>
+
+                <Border x:Name="brdDigitFour"
+                        IsVisible="False"
+                        Style="{StaticResource SignInFieldStyle}">
+                    <Label x:Name="lblDigitFour"
+                           Text="_"
+                           Style="{StaticResource DifficultyNameStyle}" />
+                </Border>
+
+                <Border x:Name="brdDigitFive"
+                        IsVisible="False"
+                        Style="{StaticResource SignInFieldStyle}">
+                    <Label x:Name="lblDigitFive"
+                           Text="_"
+                           Style="{StaticResource DifficultyNameStyle}" />
+                </Border>
+
+            </HorizontalStackLayout>
+
+            <!-- Feedback -->
+            <Border Style="{StaticResource SignInFieldStyle}">
+                <Grid ColumnDefinitions="*,*">
+
+                    <Label x:Name="lblHits"
+                           Text="HITS: —"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblMatches"
+                           Grid.Column="1"
+                           Text="MATCHES: —"
+                           HorizontalTextAlignment="End"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                </Grid>
+            </Border>
+
+            <Label x:Name="lblGameMessage"
+                   Text="Enter a code using different digits."
+                   Style="{StaticResource SignInRememberStyle}" />
+
+            <!-- Number buttons are created in the C# constructor -->
+            <Grid x:Name="grdKeypad"
+                  ColumnDefinitions="*,*,*"
+                  RowDefinitions="Auto,Auto,Auto,Auto"
+                  ColumnSpacing="8"
+                  RowSpacing="8">
+
+                <Button x:Name="btnDelete"
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Text="Delete"
+                        Style="{StaticResource WelcomeGuestStyle}" />
+
+                <Button x:Name="btnEnter"
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Text="Enter"
+                        Style="{StaticResource WelcomeSignInStyle}" />
+
+            </Grid>
+
+            <!-- Guess history -->
+            <Border Style="{StaticResource SignInFieldStyle}">
+                <VerticalStackLayout>
+
+                    <Label x:Name="lblGuessHistoryHeading"
+                           Text="GUESS HISTORY"
+                           Style="{StaticResource WelcomeTaglineStyle}" />
+
+                    <Label x:Name="lblGuessCount"
+                           Text="Guesses: 0"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblGuessHistory"
+                           Text="Your guesses will appear here."
+                           Style="{StaticResource DifficultyDetailStyle}" />
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
