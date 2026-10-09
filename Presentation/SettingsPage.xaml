@@ -25,16 +25,17 @@
             <Label
                 x:Name="lblSettingsTitle"
                 Text="SETTINGS"
-                TextColor="White"
+                FontFamily="OpenSansSemibold"
                 FontSize="28"
-                FontAttributes="Bold"
-                HorizontalTextAlignment="Center" />
+                HorizontalTextAlignment="Center"
+                TextColor="{AppThemeBinding Light=#073B5B, Dark=#FFFFFF}" />
 
             <Label
                 x:Name="lblSettingsDescription"
                 Text="Personalise your flight."
-                TextColor="White"
-                HorizontalTextAlignment="Center" />
+                FontSize="14"
+                HorizontalTextAlignment="Center"
+                TextColor="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
 
             <!-- Difficulty -->
             <Border Style="{StaticResource PlayerOptionsCardStyle}">
@@ -43,8 +44,9 @@
                     <Label
                         x:Name="lblDifficultyHeading"
                         Text="DEFAULT DIFFICULTY"
-                        TextColor="White"
-                        Style="{StaticResource PlayerOptionsHeadingStyle}" />
+                        FontFamily="OpenSansSemibold"
+                        FontSize="16"
+                        TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                     <Grid ColumnDefinitions="*,*,*"
                           ColumnSpacing="8">
@@ -78,8 +80,8 @@
                     <Label
                         x:Name="lblDifficultyHint"
                         Text="Choose your preferred difficulty."
-                        TextColor="White"
-                        FontSize="12" />
+                        FontSize="12"
+                        TextColor="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
 
                 </VerticalStackLayout>
             </Border>
@@ -91,8 +93,9 @@
                     <Label
                         x:Name="lblLanguageHeading"
                         Text="LANGUAGE"
-                        TextColor="White"
-                        Style="{StaticResource PlayerOptionsHeadingStyle}" />
+                        FontFamily="OpenSansSemibold"
+                        FontSize="16"
+                        TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                     <Grid ColumnDefinitions="*,*"
                           ColumnSpacing="10">
@@ -125,9 +128,9 @@
                     <Label
                         x:Name="lblAudioHeading"
                         Text="AUDIO SETTINGS"
-                        TextColor="White"
+                        FontFamily="OpenSansSemibold"
                         FontSize="16"
-                        FontAttributes="Bold" />
+                        TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                     <Grid ColumnDefinitions="*,Auto"
                           RowDefinitions="Auto,Auto,Auto"
@@ -138,8 +141,8 @@
                             x:Name="lblSoundEffects"
                             Grid.Row="0"
                             Text="Sound effects"
-                            TextColor="White"
-                            VerticalTextAlignment="Center" />
+                            VerticalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                         <Switch
                             x:Name="swtSoundEffects"
@@ -152,8 +155,8 @@
                             x:Name="lblMusic"
                             Grid.Row="1"
                             Text="Background music"
-                            TextColor="White"
-                            VerticalTextAlignment="Center" />
+                            VerticalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                         <Switch
                             x:Name="swtMusic"
@@ -166,8 +169,8 @@
                             x:Name="lblVoiceHints"
                             Grid.Row="2"
                             Text="Voice hints"
-                            TextColor="White"
-                            VerticalTextAlignment="Center" />
+                            VerticalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                         <Switch
                             x:Name="swtVoiceHints"
@@ -189,8 +192,8 @@
                     <Label
                         x:Name="lblDarkMode"
                         Text="Dark mode"
-                        TextColor="White"
-                        VerticalTextAlignment="Center" />
+                        VerticalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
 
                     <Switch
                         x:Name="swtDarkMode"
@@ -205,9 +208,9 @@
             <Label
                 x:Name="lblSettingsMessage"
                 Text="Changes are saved automatically."
-                TextColor="White"
+                FontSize="13"
                 HorizontalTextAlignment="Center"
-                FontSize="13" />
+                TextColor="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
 
             <!-- Reset -->
             <Button
