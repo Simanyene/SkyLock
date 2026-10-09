@@ -1,3 +1,4 @@
+
 namespace SkyLock.Presentation;
 
 public partial class HomePage : ContentPage
@@ -18,12 +19,14 @@ public partial class HomePage : ContentPage
         playerAccountId = accountId;
     }
 
+    // Show or hide the side menu.
     private void SetMenuVisible(bool visible)
     {
         grdMenuOverlay.IsVisible = visible;
         grdHomeContent.IsEnabled = !visible;
     }
 
+    // Open the side menu.
     private async void OnOpenMenuClicked(
         object? sender,
         EventArgs e)
@@ -37,6 +40,7 @@ public partial class HomePage : ContentPage
         SetMenuVisible(true);
     }
 
+    // Close the side menu.
     private void OnMenuCloseRequested(
         object? sender,
         EventArgs e)
@@ -44,6 +48,7 @@ public partial class HomePage : ContentPage
         SetMenuVisible(false);
     }
 
+    // Close the menu when tapping outside it.
     private void OnMenuBackdropTapped(
         object? sender,
         TappedEventArgs e)
@@ -51,6 +56,7 @@ public partial class HomePage : ContentPage
         SetMenuVisible(false);
     }
 
+    // Navigate to another page.
     private async Task OpenPageAsync(
         Func<Page> createPage)
     {
@@ -62,7 +68,14 @@ public partial class HomePage : ContentPage
 
         try
         {
-            await Navigation.PushAsync(createPage());
+            if (Navigation.NavigationStack.Count > 0)
+            {
+                await Navigation.PushAsync(createPage());
+            }
+            else if (Window is not null)
+            {
+                Window.Page = new NavigationPage(createPage());
+            }
         }
         finally
         {
@@ -70,6 +83,7 @@ public partial class HomePage : ContentPage
         }
     }
 
+    // Start Flight button.
     private async void OnStartFlightClicked(
         object? sender,
         EventArgs e)
@@ -78,6 +92,7 @@ public partial class HomePage : ContentPage
             () => new DifficultyPage(playerAccountId));
     }
 
+    // How to Play button.
     private async void OnHowToPlayClicked(
         object? sender,
         EventArgs e)
@@ -86,16 +101,47 @@ public partial class HomePage : ContentPage
             () => new HowToPlayPage());
     }
 
+    // Back button.
     private async void OnBackClicked(
         object? sender,
         EventArgs e)
     {
+        await GoBackAsync();
+    }
+
+    // Return to the previous page, or Welcome Page.
+    private async Task GoBackAsync()
+    {
         if (isNavigating)
             return;
 
-        await Navigation.PopAsync();
+        if (grdMenuOverlay.IsVisible)
+        {
+            SetMenuVisible(false);
+            return;
+        }
+
+        isNavigating = true;
+
+        try
+        {
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                await Navigation.PopAsync();
+            }
+            else if (Window is not null)
+            {
+                Window.Page = new NavigationPage(
+                    new WelcomePage());
+            }
+        }
+        finally
+        {
+            isNavigating = false;
+        }
     }
 
+    // Handle side menu selections.
     private async void OnMenuItemSelected(
         object? sender,
         string destination)
@@ -134,20 +180,19 @@ public partial class HomePage : ContentPage
                     () => new SettingsPage(playerAccountId));
                 break;
 
-           // case "Chat":
-             //   await OpenPageAsync(
-                   // () => new ChatPage());
-              //  break;
-
             case "SignOut":
+                SetMenuVisible(false);
+
                 if (Window is not null)
                 {
-                    Window.Page = new WelcomePage();
+                    Window.Page = new NavigationPage(
+                        new WelcomePage());
                 }
                 break;
         }
     }
 
+    // Android physical Back button.
     protected override bool OnBackButtonPressed()
     {
         if (grdMenuOverlay.IsVisible)
@@ -156,6 +201,9 @@ public partial class HomePage : ContentPage
             return true;
         }
 
-        return base.OnBackButtonPressed();
+        MainThread.BeginInvokeOnMainThread(
+            async () => await GoBackAsync());
+
+        return true;
     }
 }

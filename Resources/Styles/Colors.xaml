@@ -92,4 +92,11 @@
     <Color x:Key="WarningBackground">#5C1020</Color>
     <Color x:Key="WarningBorderColor">#FF4055</Color>
 
+
+    <!-- All SkyLock text must be white -->
+    <Color x:Key="SkyLockTextPrimary">#FFFFFF</Color>
+    <Color x:Key="SkyLockTextSecondary">#FFFFFF</Color>
+    <Color x:Key="SkyLockTextMuted">#FFFFFF</Color>
+
+
 </ResourceDictionary>
