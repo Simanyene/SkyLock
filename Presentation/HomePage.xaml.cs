@@ -3,12 +3,14 @@ namespace SkyLock.Presentation;
 public partial class HomePage : ContentPage
 {
     private readonly int? playerAccountId;
+    private bool isNavigating;
 
-    // Used when continuing as a guest.
+    // Guest Home page
     public HomePage() : this(null)
     {
     }
 
+    // Signed-in Home page
     public HomePage(int? accountId)
     {
         InitializeComponent();
@@ -16,59 +18,144 @@ public partial class HomePage : ContentPage
         playerAccountId = accountId;
     }
 
-    private async void OnStartFlightClicked(
-        object? sender, EventArgs e)
+    private void SetMenuVisible(bool visible)
     {
-        if (!btnStartFlight.IsEnabled)
+        grdMenuOverlay.IsVisible = visible;
+        grdHomeContent.IsEnabled = !visible;
+    }
+
+    private async void OnOpenMenuClicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (isNavigating)
             return;
 
-        btnStartFlight.IsEnabled = false;
+        await sideMenuView.LoadProfileAsync(
+            playerAccountId);
+
+        SetMenuVisible(true);
+    }
+
+    private void OnMenuCloseRequested(
+        object? sender,
+        EventArgs e)
+    {
+        SetMenuVisible(false);
+    }
+
+    private void OnMenuBackdropTapped(
+        object? sender,
+        TappedEventArgs e)
+    {
+        SetMenuVisible(false);
+    }
+
+    private async Task OpenPageAsync(
+        Func<Page> createPage)
+    {
+        if (isNavigating)
+            return;
+
+        isNavigating = true;
+        SetMenuVisible(false);
 
         try
         {
-            await Navigation.PushAsync(
-                new DifficultyPage(playerAccountId));
+            await Navigation.PushAsync(createPage());
         }
         finally
         {
-            btnStartFlight.IsEnabled = true;
+            isNavigating = false;
         }
+    }
+
+    private async void OnStartFlightClicked(
+        object? sender,
+        EventArgs e)
+    {
+        await OpenPageAsync(
+            () => new DifficultyPage(playerAccountId));
     }
 
     private async void OnHowToPlayClicked(
-        object? sender, EventArgs e)
+        object? sender,
+        EventArgs e)
     {
-        if (!btnHowToPlay.IsEnabled)
+        await OpenPageAsync(
+            () => new HowToPlayPage());
+    }
+
+    private async void OnBackClicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (isNavigating)
             return;
 
-        btnHowToPlay.IsEnabled = false;
+        await Navigation.PopAsync();
+    }
 
-        try
+    private async void OnMenuItemSelected(
+        object? sender,
+        string destination)
+    {
+        if (isNavigating)
+            return;
+
+        switch (destination)
         {
-            await Navigation.PushAsync(new HowToPlayPage());
-        }
-        finally
-        {
-            btnHowToPlay.IsEnabled = true;
+            case "Home":
+                SetMenuVisible(false);
+                break;
+
+            case "StartFlight":
+                await OpenPageAsync(
+                    () => new DifficultyPage(playerAccountId));
+                break;
+
+            case "HowToPlay":
+                await OpenPageAsync(
+                    () => new HowToPlayPage());
+                break;
+
+            case "FlightRecords":
+                await OpenPageAsync(
+                    () => new FlightRecordsPage(playerAccountId));
+                break;
+
+            case "Profile":
+                await OpenPageAsync(
+                    () => new ProfilePage(playerAccountId));
+                break;
+
+            case "Settings":
+                await OpenPageAsync(
+                    () => new SettingsPage(playerAccountId));
+                break;
+
+           // case "Chat":
+             //   await OpenPageAsync(
+                   // () => new ChatPage());
+              //  break;
+
+            case "SignOut":
+                if (Window is not null)
+                {
+                    Window.Page = new WelcomePage();
+                }
+                break;
         }
     }
 
-    private async void OnFlightRecordsClicked(
-        object? sender, EventArgs e)
+    protected override bool OnBackButtonPressed()
     {
-        if (!btnFlightRecords.IsEnabled)
-            return;
-
-        btnFlightRecords.IsEnabled = false;
-
-        try
+        if (grdMenuOverlay.IsVisible)
         {
-            await Navigation.PushAsync(
-                new FlightRecordsPage(playerAccountId));
+            SetMenuVisible(false);
+            return true;
         }
-        finally
-        {
-            btnFlightRecords.IsEnabled = true;
-        }
+
+        return base.OnBackButtonPressed();
     }
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SkyLock.Presentation.LoadingPage"
-             Title="LoadingPage">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.LoadingPage"
+    Title="LoadingPage">
+
     <Grid x:Name="grdLoadingPage">
 
         <Image
@@ -43,10 +45,13 @@
                 Style="{StaticResource LoadingTrackStyle}">
 
                 <Grid x:Name="grdLoadingTrack">
+
                     <BoxView
                         x:Name="bxvLoadingFill"
                         Style="{StaticResource LoadingFillStyle}" />
+
                 </Grid>
+
             </Border>
 
             <Label
@@ -62,5 +67,7 @@
                 Style="{StaticResource LoadingVersionStyle}" />
 
         </Grid>
+
     </Grid>
+
 </ContentPage>

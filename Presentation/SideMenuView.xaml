@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:SkyLock.Services"
+    x:Class="SkyLock.Presentation.SideMenuView">
+
+    <Border Style="{StaticResource SideMenuPanelStyle}">
+
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto"
+              RowSpacing="12">
+
+            <!-- Branding -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*,Auto">
+
+                <VerticalStackLayout Spacing="0">
+
+                    <Label x:Name="lblMenuTitle"
+                           Text="SKYLOCK"
+                           Style="{StaticResource FeatureHeadingStyle}" />
+
+                    <Label x:Name="lblMenuTagline"
+                           Text="{loc:Translate slogan}"
+                           Style="{StaticResource WelcomeTaglineStyle}" />
+
+                </VerticalStackLayout>
+
+                <Button Grid.Column="1"
+                        x:Name="btnCloseMenu"
+                        Text="Close"
+                        Clicked="OnCloseClicked"
+                        Style="{StaticResource BackButtonStyle}" />
+
+            </Grid>
+
+            <!-- Avatar and player name -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Spacing="6"
+                                 HorizontalOptions="Center">
+
+                <Image x:Name="imgAvatar"
+                       Source="avatar_neutral.png"
+                       Style="{StaticResource ProfileAvatarStyle}" />
+
+                <Label x:Name="lblHello"
+                       Text="Welcome, Guest"
+                       Style="{StaticResource FeatureHeadingStyle}"
+                       HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+
+            <Label Grid.Row="2"
+                   Text="Choose where you want to go"
+                   Style="{StaticResource FeatureBodyStyle}"
+                   HorizontalTextAlignment="Center" />
+
+            <!-- Menu buttons -->
+            <ScrollView Grid.Row="3">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Button x:Name="btnMenuHome"
+                            Text="Home"
+                            StyleId="Home"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuPlay"
+                            Text="{loc:Translate play}"
+                            StyleId="StartFlight"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuInstructions"
+                            Text="{loc:Translate instructions}"
+                            StyleId="HowToPlay"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuRecords"
+                            Text="{loc:Translate records}"
+                            StyleId="FlightRecords"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuProfile"
+                            Text="{loc:Translate profile}"
+                            StyleId="Profile"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuSettings"
+                            Text="{loc:Translate settings}"
+                            StyleId="Settings"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuChat"
+                            Text="Chat (local preview)"
+                            StyleId="Chat"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                </VerticalStackLayout>
+
+            </ScrollView>
+
+            <!-- Sign out -->
+            <Button Grid.Row="4"
+                    x:Name="btnMenuSignOut"
+                    Text="{loc:Translate sign_out}"
+                    StyleId="SignOut"
+                    Clicked="OnMenuItemClicked"
+                    Style="{StaticResource WelcomeGuestStyle}" />
+
+        </Grid>
+
+    </Border>
+
+</ContentView>

@@ -19,7 +19,7 @@ namespace SkyLock
             IActivationState? activationState)
         {
             return new Window(
-                new SkyLock.Presentation.IntroPage());
+                new SkyLock.Presentation.LoadingPage());
         }
     }
 }

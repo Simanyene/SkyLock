@@ -1063,5 +1063,170 @@
        BasedOn="{StaticResource SignInFieldStyle}">
         <Setter Property="Margin" Value="0,0,0,12" />
     </Style>
-    
+
+    <!-- Side menu -->
+    <Style x:Key="SideMenuPanelStyle"
+       TargetType="Border">
+
+        <Setter Property="BackgroundColor"
+            Value="{StaticResource WelcomeBackground}" />
+
+        <Setter Property="Stroke"
+            Value="{StaticResource HomeMenuBorder}" />
+
+        <Setter Property="StrokeThickness"
+            Value="1" />
+
+        <Setter Property="Padding"
+            Value="20" />
+
+        <Setter Property="HorizontalOptions"
+            Value="Fill" />
+
+        <Setter Property="VerticalOptions"
+            Value="Fill" />
+
+    </Style>
+
+    <!-- Shared profile and settings styles -->
+
+    <Style x:Key="PlayerOptionsPageStyle"
+       TargetType="ContentPage">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BackgroundColor"
+            Value="{AppThemeBinding Light=#EDF5FC, Dark=#03162D}" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsLayoutStyle"
+       TargetType="Grid">
+        <Setter Property="Padding" Value="20,12,20,24" />
+        <Setter Property="RowSpacing" Value="16" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsStackStyle"
+       TargetType="VerticalStackLayout">
+        <Setter Property="Spacing" Value="16" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsTitleStyle"
+       TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light=#073B5B, Dark=#C5F3FF}" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsHeadingStyle"
+       TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light=#10283F, Dark=#FFFFFF}" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsTextStyle"
+       TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsCardStyle"
+       TargetType="Border">
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke"
+            Value="{AppThemeBinding Light=#A7C8DE, Dark=#24516F}" />
+        <Setter Property="BackgroundColor"
+            Value="{AppThemeBinding Light=#FFFFFF, Dark=#082D49}" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="16" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PlayerOptionsButtonStyle"
+       TargetType="Button">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="#007BB8" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsBackStyle"
+       TargetType="Button"
+       BasedOn="{StaticResource PlayerOptionsButtonStyle}">
+        <Setter Property="Text" Value="Back" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="WidthRequest" Value="80" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsPickerStyle"
+       TargetType="Picker">
+        <Setter Property="TitleColor"
+            Value="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
+        <Setter Property="TextColor"
+            Value="{AppThemeBinding Light=#10283F, Dark=#FFFFFF}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+    </Style>
+
+    <Style x:Key="PlayerOptionsSwitchStyle"
+       TargetType="Switch">
+        <Setter Property="OnColor" Value="#007BB8" />
+        <Setter Property="ThumbColor" Value="#4FC3F7" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="PlayerAvatarPreviewStyle"
+       TargetType="Image">
+        <Setter Property="WidthRequest" Value="110" />
+        <Setter Property="HeightRequest" Value="110" />
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="PlayerAvatarButtonStyle"
+       TargetType="ImageButton">
+        <Setter Property="HeightRequest" Value="76" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="BackgroundColor"
+            Value="{AppThemeBinding Light=#EDF5FC, Dark=#03162D}" />
+
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BorderColor"
+                                Value="Transparent" />
+                            <Setter Property="BorderWidth"
+                                Value="2" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="BorderColor"
+                                Value="#00BFFF" />
+                            <Setter Property="BorderWidth"
+                                Value="4" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

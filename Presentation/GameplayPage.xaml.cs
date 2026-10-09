@@ -1,6 +1,7 @@
-using System.Diagnostics;
 using Microsoft.Maui.Dispatching;
 using SkyLock.Models;
+using System.Diagnostics;
+using SkyLock.Services;
 
 namespace SkyLock.Presentation;
 
@@ -11,20 +12,30 @@ public partial class GameplayPage : ContentPage
     private readonly int timeLimitSeconds;
     private readonly int? playerAccountId;
 
+    // Correct digits are locked in place after a guess. Easy only, same rule as DifficultyInfo.LocksHits.
+    private readonly bool locksHits;
+
     private readonly IDispatcherTimer gameTimer;
     private readonly Stopwatch flightClock = new();
-
     private readonly Label[] digitLabels;
 
+    // Colours for locked (correct) digits
+    private static readonly Color LockedGreen = Color.FromArgb("#2E7D32");
+    private readonly Border[] digitBorders;
+    private readonly Brush[] defaultBorderBrushes;
+    private readonly Color? defaultTextColor;
+
     private string secretCode = "";
-    private string currentGuess = "";
+
+    // One slot per digit position. '\0' = empty, otherwise the digit typed or locked there.
+    private char[] guessSlots = Array.Empty<char>();
+    private bool[] lockedSlots = Array.Empty<bool>();
 
     private int guessCount;
     private bool gameStarted;
     private bool gameFinished;
     private bool isPaused;
 
-    // Default: Easy, 3 digits, 7 minutes.
     public GameplayPage() : this("Easy", 3, 420)
     {
     }
@@ -42,6 +53,11 @@ public partial class GameplayPage : ContentPage
         timeLimitSeconds = seconds;
         playerAccountId = accountId;
 
+        locksHits = difficulty.Equals("Easy", StringComparison.OrdinalIgnoreCase);
+
+        guessSlots = new char[digitCount];
+        lockedSlots = new bool[digitCount];
+
         digitLabels = new[]
         {
             lblDigitOne,
@@ -51,13 +67,16 @@ public partial class GameplayPage : ContentPage
             lblDigitFive
         };
 
+        digitBorders = Array.ConvertAll(digitLabels, label => (Border)label.Parent!);
+        defaultBorderBrushes = Array.ConvertAll(digitBorders, border => border.Background);
+        defaultTextColor = lblDigitOne.TextColor;
+
         brdDigitFour.IsVisible = digitCount >= 4;
         brdDigitFive.IsVisible = digitCount == 5;
 
         lblCodeInstruction.Text =
             $"ENTER {digitCount}-DIGIT OVERRIDE";
 
-        // Create number buttons and store each digit in StyleId.
         for (int digit = 0; digit <= 9; digit++)
         {
             Button btnDigit = new Button
@@ -70,7 +89,6 @@ public partial class GameplayPage : ContentPage
 
             btnDigit.Clicked += OnNumberClicked;
 
-            // Place 1–9 in three rows and 0 below them.
             int row = digit == 0 ? 3 : (digit - 1) / 3;
             int column = digit == 0 ? 1 : (digit - 1) % 3;
 
@@ -83,7 +101,7 @@ public partial class GameplayPage : ContentPage
         btnDelete.Clicked += OnDeleteClicked;
         btnEnter.Clicked += OnEnterClicked;
         btnPause.Clicked += OnPauseClicked;
-        btnChat.Clicked += OnChatClicked;
+        btnBack.Clicked += OnBackClicked;
 
         gameTimer = Dispatcher.CreateTimer();
         gameTimer.Interval = TimeSpan.FromMilliseconds(200);
@@ -94,10 +112,8 @@ public partial class GameplayPage : ContentPage
     {
         base.OnAppearing();
 
-        if (gameStarted)
-            return;
-
-        StartNewGame();
+        if (!gameStarted)
+            StartNewGame();
     }
 
     private void StartNewGame()
@@ -110,33 +126,41 @@ public partial class GameplayPage : ContentPage
         isPaused = false;
 
         guessCount = 0;
-        currentGuess = "";
+        ClearGuessSlots();
 
         GenerateSecretCode();
         UpdateDigitBoxes();
-        UpdateFlightDisplay();
 
         lblHits.Text = "HITS: —";
         lblMatches.Text = "MATCHES: —";
         lblGuessCount.Text = "Guesses: 0";
-        lblGuessHistory.Text = "Your guesses will appear here.";
+        lblGuessHistory.Text =
+            "Your guesses will appear here.";
 
         lblGameMessage.Text =
             $"{selectedDifficulty}: enter {digitCount} different digits.";
 
         btnPause.Text = "Pause";
         btnPause.IsEnabled = true;
-        btnChat.IsEnabled = true;
+        btnBack.IsEnabled = true;
         grdKeypad.IsEnabled = true;
 
         flightClock.Start();
         gameTimer.Start();
+
+        UpdateFlightDisplay();
+    }
+
+    private void ClearGuessSlots()
+    {
+        Array.Clear(guessSlots);
+        Array.Clear(lockedSlots);
     }
 
     private void GenerateSecretCode()
     {
-        // The first digit cannot be zero.
-        secretCode = Random.Shared.Next(1, 10).ToString();
+        secretCode =
+            Random.Shared.Next(1, 10).ToString();
 
         while (secretCode.Length < digitCount)
         {
@@ -162,31 +186,49 @@ public partial class GameplayPage : ContentPage
         return true;
     }
 
-    private void OnNumberClicked(object? sender, EventArgs e)
+    /// <summary>First position that is not locked and still empty, or -1 if none.</summary>
+    private int NextOpenSlot()
     {
-        if (!CanPlay() || sender is not Button btnDigit)
+        for (int i = 0; i < digitCount; i++)
+        {
+            if (!lockedSlots[i] && guessSlots[i] == '\0')
+                return i;
+        }
+
+        return -1;
+    }
+
+    private void OnNumberClicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (!CanPlay() ||
+            sender is not Button btnDigit)
+        {
+            return;
+        }
+
+        char selectedDigit = btnDigit.StyleId[0];
+
+        int slot = NextOpenSlot();
+        if (slot < 0)
             return;
 
-        string selectedDigit = btnDigit.StyleId;
-
-        if (currentGuess.Length >= digitCount)
-            return;
-
-        if (currentGuess.Contains(selectedDigit))
+        if (Array.IndexOf(guessSlots, selectedDigit) >= 0)
         {
             lblGameMessage.Text =
                 "Each digit must be different.";
             return;
         }
 
-        if (currentGuess.Length == 0 && selectedDigit == "0")
+        if (slot == 0 && selectedDigit == '0')
         {
             lblGameMessage.Text =
                 "The first digit cannot be zero.";
             return;
         }
 
-        currentGuess += selectedDigit;
+        guessSlots[slot] = selectedDigit;
 
         lblGameMessage.Text =
             "Press Enter to check your code.";
@@ -194,15 +236,23 @@ public partial class GameplayPage : ContentPage
         UpdateDigitBoxes();
     }
 
-    private void OnDeleteClicked(object? sender, EventArgs e)
+    private void OnDeleteClicked(
+        object? sender,
+        EventArgs e)
     {
-        if (!CanPlay() || currentGuess.Length == 0)
+        if (!CanPlay())
             return;
 
-        currentGuess = currentGuess.Remove(
-            currentGuess.Length - 1);
-
-        UpdateDigitBoxes();
+        // Remove the last digit that the player typed (locked digits stay).
+        for (int i = digitCount - 1; i >= 0; i--)
+        {
+            if (!lockedSlots[i] && guessSlots[i] != '\0')
+            {
+                guessSlots[i] = '\0';
+                UpdateDigitBoxes();
+                return;
+            }
+        }
     }
 
     private void UpdateDigitBoxes()
@@ -211,19 +261,29 @@ public partial class GameplayPage : ContentPage
              digitIndex < digitCount;
              digitIndex++)
         {
-            digitLabels[digitIndex].Text =
-                digitIndex < currentGuess.Length
-                    ? currentGuess[digitIndex].ToString()
-                    : "_";
+            bool locked = lockedSlots[digitIndex];
+            Label label = digitLabels[digitIndex];
+
+            label.Text =
+                guessSlots[digitIndex] == '\0'
+                    ? "_"
+                    : guessSlots[digitIndex].ToString();
+
+            label.TextColor = locked ? Colors.White : defaultTextColor;
+            digitBorders[digitIndex].Background = locked
+                ? new SolidColorBrush(LockedGreen)
+                : defaultBorderBrushes[digitIndex];
         }
     }
 
-    private void OnEnterClicked(object? sender, EventArgs e)
+    private void OnEnterClicked(
+        object? sender,
+        EventArgs e)
     {
         if (!CanPlay())
             return;
 
-        if (currentGuess.Length != digitCount)
+        if (NextOpenSlot() != -1)
         {
             lblGameMessage.Text =
                 $"Please enter all {digitCount} digits.";
@@ -232,19 +292,21 @@ public partial class GameplayPage : ContentPage
 
         int hits = 0;
         int matches = 0;
+        bool[] hitPositions = new bool[digitCount];
 
         for (int digitIndex = 0;
              digitIndex < digitCount;
              digitIndex++)
         {
-            if (currentGuess[digitIndex] == secretCode[digitIndex])
+            if (guessSlots[digitIndex] ==
+                secretCode[digitIndex])
             {
-                // Correct digit in the correct position.
                 hits++;
+                hitPositions[digitIndex] = true;
             }
-            else if (secretCode.Contains(currentGuess[digitIndex]))
+            else if (secretCode.Contains(
+                guessSlots[digitIndex]))
             {
-                // Correct digit in the wrong position.
                 matches++;
             }
         }
@@ -255,15 +317,17 @@ public partial class GameplayPage : ContentPage
         lblMatches.Text = $"MATCHES: {matches}";
         lblGuessCount.Text = $"Guesses: {guessCount}";
 
+        string guessText = string.Concat(guessSlots);
         string guessRecord =
-            $"{guessCount}. {currentGuess} — " +
+            $"{guessCount}. {guessText} — " +
             $"{hits} hits, {matches} matches";
 
-        // Show the latest guess first.
-        lblGuessHistory.Text = guessCount == 1
-            ? guessRecord
-            : guessRecord + Environment.NewLine
-                + lblGuessHistory.Text;
+        lblGuessHistory.Text =
+            guessCount == 1
+                ? guessRecord
+                : guessRecord +
+                  Environment.NewLine +
+                  lblGuessHistory.Text;
 
         if (hits == digitCount)
         {
@@ -271,29 +335,48 @@ public partial class GameplayPage : ContentPage
             return;
         }
 
-        currentGuess = "";
+        // Lock correct digits in place (Easy), then clear everything else.
+        for (int digitIndex = 0;
+             digitIndex < digitCount;
+             digitIndex++)
+        {
+            if (locksHits && hitPositions[digitIndex])
+                lockedSlots[digitIndex] = true;
+
+            if (!lockedSlots[digitIndex])
+                guessSlots[digitIndex] = '\0';
+        }
+
         UpdateDigitBoxes();
 
         lblGameMessage.Text =
-            "Code rejected. Try another code.";
+            locksHits && hits > 0
+                ? $"{hits} digit(s) locked in place. Try another code."
+                : "Code rejected. Try another code.";
     }
 
-    private void OnGameTimerTick(object? sender, EventArgs e)
+    private void OnGameTimerTick(
+        object? sender,
+        EventArgs e)
     {
         if (gameFinished || isPaused)
             return;
 
         UpdateFlightDisplay();
 
-        if (flightClock.Elapsed.TotalSeconds >= timeLimitSeconds)
+        if (flightClock.Elapsed.TotalSeconds >=
+            timeLimitSeconds)
+        {
             FinishGame(false);
+        }
     }
 
     private void UpdateFlightDisplay()
     {
         double remainingSeconds = Math.Max(
             0,
-            timeLimitSeconds - flightClock.Elapsed.TotalSeconds);
+            timeLimitSeconds -
+            flightClock.Elapsed.TotalSeconds);
 
         int displayedSeconds =
             (int)Math.Ceiling(remainingSeconds);
@@ -301,18 +384,72 @@ public partial class GameplayPage : ContentPage
         TimeSpan remainingTime =
             TimeSpan.FromSeconds(displayedSeconds);
 
-        lblTimeLeft.Text = remainingTime.ToString(@"mm\:ss");
+        lblTimeLeft.Text =
+            remainingTime.ToString(@"mm\:ss");
 
-        // The altitude display follows the remaining time.
         int altitude = 1200 + (int)(
-            8800 * remainingSeconds / timeLimitSeconds);
+            8800 *
+            remainingSeconds /
+            timeLimitSeconds);
 
-        lblAltitude.Text = $"{altitude:N0} FT";
+        lblAltitude.Text =
+            $"{altitude:N0} FT";
 
         cvTimeWarning.UpdateTime(
-            gameFinished ? 0 : displayedSeconds);
+            gameFinished
+                ? 0
+                : displayedSeconds);
     }
 
+    private void PauseFlight()
+    {
+        isPaused = true;
+        flightClock.Stop();
+        gameTimer.Stop();
+
+        btnPause.Text = LocalizationService.T("resume");
+        grdKeypad.IsEnabled = false;
+        lblGameMessage.Text = "Flight paused.";
+    }
+    private async void OnBackClicked(object? sender, EventArgs e)
+    {
+        if (gameFinished)
+            return;
+
+        bool wasPaused = isPaused;
+
+        if (!wasPaused)
+            PauseFlight();
+
+        string choice = await DisplayActionSheet(
+            LocalizationService.T("back_title"),
+            LocalizationService.T("resume"),          // cancel: keep flying
+            null,
+            LocalizationService.T("back_quit"),
+            LocalizationService.T("back_side_menu"));
+
+        if (choice == LocalizationService.T("back_quit"))
+        {
+            // Leave without saving a result
+            gameFinished = true;
+            StopFlightTimer();
+            await Navigation.PopAsync();
+        }
+        else if (choice == LocalizationService.T("back_side_menu"))
+        {
+            gameFinished = true;
+            StopFlightTimer();
+            await Navigation.PopAsync();
+
+            if (Shell.Current is not null)
+                Shell.Current.FlyoutIsPresented = true;
+        }
+        else if (!wasPaused)
+        {
+            // Resume, or the popup was dismissed
+            ResumeFlight();
+        }
+    }
     private void OnPauseClicked(object? sender, EventArgs e)
     {
         if (gameFinished)
@@ -325,39 +462,31 @@ public partial class GameplayPage : ContentPage
             return;
         }
 
-        isPaused = !isPaused;
-
         if (isPaused)
-        {
-            flightClock.Stop();
-            gameTimer.Stop();
-
-            btnPause.Text = "Resume";
-            lblGameMessage.Text = "Flight paused.";
-        }
+            ResumeFlight();
         else
-        {
-            flightClock.Start();
-            gameTimer.Start();
-
-            btnPause.Text = "Pause";
-            lblGameMessage.Text = "Flight resumed.";
-        }
-
-        grdKeypad.IsEnabled = !isPaused;
+            PauseFlight();
     }
 
-    private async void OnChatClicked(object? sender, EventArgs e)
+    private void ResumeFlight()
     {
-        await DisplayAlert(
-            "Flight Chat",
-            "The chat page has not been connected yet.",
-            "OK");
+        isPaused = false;
+        flightClock.Start();
+        gameTimer.Start();
+
+        btnPause.Text = LocalizationService.T("pause");
+        grdKeypad.IsEnabled = true;
+        lblGameMessage.Text = "Flight resumed.";
+    }
+
+    private void StopFlightTimer()
+    {
+        flightClock.Stop();
+        gameTimer.Stop();
     }
 
     private async void FinishGame(bool won)
     {
-        // Prevent the same round from being completed twice.
         if (gameFinished)
             return;
 
@@ -365,16 +494,20 @@ public partial class GameplayPage : ContentPage
 
         flightClock.Stop();
         gameTimer.Stop();
+
         UpdateFlightDisplay();
 
         grdKeypad.IsEnabled = false;
         btnPause.IsEnabled = false;
-        btnChat.IsEnabled = false;
+        btnBack.IsEnabled = false;
 
-        string resultTitle =
-            won ? "Code Accepted!" : "Game Over";
+        lblGameMessage.Text =
+            "Saving flight result...";
 
-        lblGameMessage.Text = "Saving flight result...";
+        double elapsedSeconds = Math.Clamp(
+            flightClock.Elapsed.TotalSeconds,
+            0,
+            timeLimitSeconds);
 
         FlightRecord flightRecord = new FlightRecord
         {
@@ -383,12 +516,7 @@ public partial class GameplayPage : ContentPage
             DigitCount = digitCount,
             TimeLimitSeconds = timeLimitSeconds,
             GuessCount = guessCount,
-
-            TimeTakenSeconds = Math.Clamp(
-                flightClock.Elapsed.TotalSeconds,
-                0,
-                timeLimitSeconds),
-
+            TimeTakenSeconds = elapsedSeconds,
             Won = won,
             PlayedAtUtc = DateTime.UtcNow
         };
@@ -397,8 +525,8 @@ public partial class GameplayPage : ContentPage
 
         try
         {
-            await App.FlightRecordsService.AddRecordAsync(
-                flightRecord);
+            await App.FlightRecordsService
+                .AddRecordAsync(flightRecord);
 
             resultSaved = true;
         }
@@ -408,29 +536,21 @@ public partial class GameplayPage : ContentPage
                 $"Could not save flight result: {exception}");
         }
 
-        string resultMessage = won
-            ? $"Flight control restored!\nGuesses used: {guessCount}"
-            : $"Time has run out.\nThe code was {secretCode}." +
-              $"\nGuesses used: {guessCount}";
+        ResultsPage resultsPage =
+            new ResultsPage(
+                won,
+                selectedDifficulty,
+                digitCount,
+                timeLimitSeconds,
+                guessCount,
+                elapsedSeconds,
+                secretCode,
+                playerAccountId,
+                resultSaved);
 
-        if (!resultSaved)
-        {
-            resultMessage +=
-                "\n\nThis result could not be saved to Flight Records.";
-        }
+        await Navigation.PushAsync(resultsPage);
 
-        lblGameMessage.Text = resultTitle;
-
-        bool playAgain = await DisplayAlert(
-            resultTitle,
-            resultMessage,
-            "Play Again",
-            "Stay Here");
-
-        btnChat.IsEnabled = true;
-
-        if (playAgain)
-            StartNewGame();
+        Navigation.RemovePage(this);
     }
 
     protected override void OnDisappearing()
@@ -443,7 +563,8 @@ public partial class GameplayPage : ContentPage
             isPaused = true;
             btnPause.Text = "Resume";
             grdKeypad.IsEnabled = false;
-            lblGameMessage.Text = "Flight paused.";
+            lblGameMessage.Text =
+                "Flight paused.";
         }
 
         base.OnDisappearing();

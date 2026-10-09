@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.SettingsPage"
+    Title="Settings"
+    Style="{StaticResource PlayerOptionsPageStyle}"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,*"
+          Style="{StaticResource PlayerOptionsLayoutStyle}">
+
+        <Button x:Name="btnBack"
+                Text="Back"
+                Clicked="OnBackClicked"
+                Style="{StaticResource PlayerOptionsBackStyle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Style="{StaticResource PlayerOptionsStackStyle}">
+
+                <Label x:Name="lblSettingsTitle"
+                       Text="Settings"
+                       Style="{StaticResource PlayerOptionsTitleStyle}" />
+
+                <Label x:Name="lblSettingsDescription"
+                       Text="Personalise your flight."
+                       Style="{StaticResource PlayerOptionsTextStyle}" />
+
+                <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                    <VerticalStackLayout
+                        Style="{StaticResource PlayerOptionsStackStyle}">
+
+                        <Label x:Name="lblDifficultyHeading"
+                               Text="Default difficulty"
+                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                        <Picker x:Name="pkrDefaultDifficulty"
+                                Title="Select difficulty"
+                                SelectedIndexChanged="OnDifficultyChanged"
+                                Style="{StaticResource PlayerOptionsPickerStyle}">
+                            <Picker.Items>
+                                <x:String>Easy</x:String>
+                                <x:String>Medium</x:String>
+                                <x:String>Hard</x:String>
+                            </Picker.Items>
+                        </Picker>
+
+                        <Label x:Name="lblDifficultyHint"
+                               Text="This level is selected when you open the difficulty page."
+                               Style="{StaticResource PlayerOptionsTextStyle}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto,Auto"
+                          RowSpacing="16"
+                          ColumnSpacing="12">
+
+                        <Label x:Name="lblSoundEffects"
+                               Grid.Row="0"
+                               Text="Sound effects"
+                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                        <Switch x:Name="swtSoundEffects"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Toggled="OnSoundEffectsToggled"
+                                SemanticProperties.Description="Sound effects"
+                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+
+                        <Label x:Name="lblMusic"
+                               Grid.Row="1"
+                               Text="Background music"
+                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                        <Switch x:Name="swtMusic"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Toggled="OnMusicToggled"
+                                SemanticProperties.Description="Background music"
+                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+
+                        <Label x:Name="lblVoiceHints"
+                               Grid.Row="2"
+                               Text="Voice hints"
+                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                        <Switch x:Name="swtVoiceHints"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Toggled="OnVoiceHintsToggled"
+                                SemanticProperties.Description="Voice hints"
+                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+
+                        <Label x:Name="lblDarkMode"
+                               Text="Dark mode"
+                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                        <Switch x:Name="swtDarkMode"
+                                Grid.Column="1"
+                                Toggled="OnDarkModeToggled"
+                                SemanticProperties.Description="Dark mode"
+                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+
+                    </Grid>
+                </Border>
+
+                <Label x:Name="lblSettingsMessage"
+                       Text="Changes are saved automatically."
+                       Style="{StaticResource PlayerOptionsTextStyle}" />
+
+                <Button x:Name="btnResetSettings"
+                        Text="Restore default settings"
+                        Clicked="OnResetSettingsClicked"
+                        Style="{StaticResource PlayerOptionsButtonStyle}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

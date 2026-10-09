@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:presentation="clr-namespace:SkyLock.Presentation"
+    xmlns:loc="clr-namespace:SkyLock.Services"
     x:Class="SkyLock.Presentation.HomePage"
     Title="Home"
     Style="{StaticResource HomePageStyle}">
 
     <Grid>
+
+        <!-- Home background -->
         <Image Source="home_background.png"
                Style="{StaticResource WelcomeBackgroundStyle}" />
 
-        <Grid RowDefinitions="Auto,*,Auto,Auto"
+        <!-- Main Home content -->
+        <Grid x:Name="grdHomeContent"
+              RowDefinitions="Auto,*,Auto,Auto"
               Style="{StaticResource HomeLayoutStyle}">
 
             <VerticalStackLayout
                 Grid.Row="0"
                 Style="{StaticResource HomeHeaderStyle}">
+
+                <Button x:Name="btnMenu"
+                        Text="Menu"
+                        Clicked="OnOpenMenuClicked"
+                        Style="{StaticResource BackButtonStyle}" />
 
                 <Label x:Name="lblHomeTitle"
                        Text="SkyLock"
@@ -40,14 +52,10 @@
                         Text="How to Play"
                         Clicked="OnHowToPlayClicked"
                         Style="{StaticResource HomeMenuButtonStyle}" />
-              
-                <Button x:Name="btnFlightRecords"
-                        Text="Flight Records"
-                        Clicked="OnFlightRecordsClicked"
-                        Style="{StaticResource HomeMenuButtonStyle}" />
- 
-                <Button x:Name="btnSettings"
-                        Text="Settings"
+
+                <Button x:Name="btnBack"
+                        Text="Back"
+                        Clicked="OnBackClicked"
                         Style="{StaticResource HomeMenuButtonStyle}" />
 
             </VerticalStackLayout>
@@ -58,5 +66,29 @@
                    Style="{StaticResource HomeFooterStyle}" />
 
         </Grid>
+
+        <!-- SkyLock F-style menu overlay -->
+        <Grid x:Name="grdMenuOverlay"
+              IsVisible="False"
+              ColumnDefinitions="4*,*">
+
+            <BoxView Grid.ColumnSpan="2"
+                     Style="{StaticResource SideMenuBackdropStyle}">
+
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="OnMenuBackdropTapped" />
+                </BoxView.GestureRecognizers>
+
+            </BoxView>
+
+            <presentation:SideMenuView
+                x:Name="sideMenuView"
+                CloseRequested="OnMenuCloseRequested"
+                MenuItemSelected="OnMenuItemSelected" />
+
+        </Grid>
+
     </Grid>
+
 </ContentPage>
