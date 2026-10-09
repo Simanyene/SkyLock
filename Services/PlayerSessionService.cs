@@ -63,4 +63,22 @@ public static class PlayerSessionService
         GameSessionService.Reset();
         SpeechService.Stop();
     }
+
+
+    public static void UpdateCurrentName(
+        int? accountId,
+        string newName)
+    {
+        // Only update the active player's session.
+        if (CurrentAccountId != accountId)
+            return;
+
+        // Do not allow an empty username.
+        if (string.IsNullOrWhiteSpace(newName))
+            return;
+
+        // Update the username in memory.
+        CurrentName = newName.Trim();
+    }
+
 }

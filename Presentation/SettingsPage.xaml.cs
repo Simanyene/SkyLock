@@ -1,5 +1,7 @@
+
 using System;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Media;
 using SkyLock.Models;
 using SkyLock.Services;
 
@@ -7,42 +9,34 @@ namespace SkyLock.Presentation;
 
 public partial class SettingsPage : ContentPage
 {
+    private readonly int? playerAccountId;
     private bool isLoadingSettings;
 
-    public SettingsPage() : this(null)
+    public SettingsPage() : this(
+        PlayerSessionService.CurrentAccountId)
     {
     }
 
     public SettingsPage(int? accountId)
     {
         InitializeComponent();
-
-        // Settings apply to the whole app.
-        // accountId preserves compatibility with HomePage navigation.
+        playerAccountId = accountId;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
         LoadSettings();
-        ApplyTheme();
+        UpdateLanguage();
     }
 
+    // Load the saved settings.
     private void LoadSettings()
     {
         isLoadingSettings = true;
 
         try
         {
-            pkrDefaultDifficulty.SelectedIndex =
-                SettingsService.DefaultDifficulty switch
-                {
-                    GameDifficulty.Medium => 1,
-                    GameDifficulty.Hard => 2,
-                    _ => 0
-                };
-
             swtSoundEffects.IsToggled =
                 SettingsService.SoundEffectsEnabled;
 
@@ -59,28 +53,168 @@ public partial class SettingsPage : ContentPage
         {
             isLoadingSettings = false;
         }
+
+        ApplyTheme();
+        HighlightSelections();
     }
 
-    private void OnDifficultyChanged(object? sender, EventArgs e)
+    // Highlight selected difficulty and language.
+    private void HighlightSelections()
     {
-        if (isLoadingSettings ||
-            pkrDefaultDifficulty.SelectedIndex < 0)
+        HighlightButton(
+            btnEasy,
+            SettingsService.DefaultDifficulty ==
+            GameDifficulty.Easy);
+
+        HighlightButton(
+            btnMedium,
+            SettingsService.DefaultDifficulty ==
+            GameDifficulty.Medium);
+
+        HighlightButton(
+            btnHard,
+            SettingsService.DefaultDifficulty ==
+            GameDifficulty.Hard);
+
+        HighlightButton(
+            btnEnglish,
+            SettingsService.Language == "en");
+
+        HighlightButton(
+            btnZulu,
+            SettingsService.Language == "zu");
+    }
+
+    // Use SkyLock's own colours.
+    private static void HighlightButton(
+        Button button,
+        bool selected)
+    {
+        if (selected)
         {
-            return;
+            button.BackgroundColor =
+                Color.FromArgb("#0067DB");
+
+            button.BorderColor =
+                Color.FromArgb("#39DEFF");
+
+            button.BorderWidth = 2;
+
+            button.TextColor = Colors.White;
+            button.FontAttributes = FontAttributes.Bold;
         }
+        else
+        {
+            button.BackgroundColor =
+                Color.FromArgb("#073B5B");
+
+            button.BorderColor =
+                Color.FromArgb("#14B8EF");
+
+            button.BorderWidth = 1;
+
+            button.TextColor = Colors.White;
+            button.FontAttributes = FontAttributes.None;
+        }
+    }
+
+    // Difficulty buttons.
+    private async void OnDifficultyClicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (sender is not Button button)
+            return;
 
         SettingsService.DefaultDifficulty =
-            pkrDefaultDifficulty.SelectedIndex switch
+            button.StyleId switch
             {
-                1 => GameDifficulty.Medium,
-                2 => GameDifficulty.Hard,
+                "Medium" => GameDifficulty.Medium,
+                "Hard" => GameDifficulty.Hard,
                 _ => GameDifficulty.Easy
             };
 
+        HighlightSelections();
         ShowSavedMessage();
+
+        await SpeakSettingAsync(button.Text);
     }
 
-    private void OnSoundEffectsToggled(
+    // Language buttons.
+    private async void OnLanguageClicked(
+        object? sender,
+        EventArgs e)
+    {
+        if (sender is not Button button)
+            return;
+
+        string language =
+            button.StyleId == "zu" ? "zu" : "en";
+
+        LocalizationService.SetLanguage(language);
+
+        UpdateLanguage();
+        HighlightSelections();
+        ShowSavedMessage();
+
+        await SpeakSettingAsync(button.Text);
+    }
+
+    // Translate the Settings Page immediately.
+    private void UpdateLanguage()
+    {
+        bool isZulu = SettingsService.Language == "zu";
+
+        lblSettingsTitle.Text =
+            LocalizationService.T("settings").ToUpperInvariant();
+
+        lblSettingsDescription.Text = isZulu
+            ? "Lungisa izilungiselelo zendiza yakho."
+            : "Personalise your flight.";
+
+        btnBack.Text = LocalizationService.T("back");
+
+        lblDifficultyHeading.Text =
+            LocalizationService.T("difficulty").ToUpperInvariant();
+
+        btnEasy.Text = LocalizationService.T("easy");
+        btnMedium.Text = LocalizationService.T("medium");
+        btnHard.Text = LocalizationService.T("hard");
+
+        lblDifficultyHint.Text = isZulu
+            ? "Khetha izinga lobunzima olithandayo."
+            : "Choose your preferred difficulty.";
+
+        lblLanguageHeading.Text =
+            LocalizationService.T("language").ToUpperInvariant();
+
+        lblAudioHeading.Text = isZulu
+            ? "IZILUNGISELELO ZOMSINDO"
+            : "AUDIO SETTINGS";
+
+        lblSoundEffects.Text =
+            LocalizationService.T("sound");
+
+        lblMusic.Text =
+            LocalizationService.T("music");
+
+        lblVoiceHints.Text =
+            LocalizationService.T("voice_hints");
+
+        lblDarkMode.Text =
+            LocalizationService.T("dark_theme");
+
+        btnResetSettings.Text = isZulu
+            ? "Buyisela Izilungiselelo Zokuqala"
+            : "Restore Default Settings";
+
+        lblSettingsMessage.Text = isZulu
+            ? "Izinguquko zigcinwa ngokuzenzakalelayo."
+            : "Changes are saved automatically.";
+    }
+
+    // Sound effects switch.
+    private async void OnSoundEffectsToggled(
         object? sender,
         ToggledEventArgs e)
     {
@@ -89,9 +223,14 @@ public partial class SettingsPage : ContentPage
 
         SettingsService.SoundEffectsEnabled = e.Value;
         ShowSavedMessage();
+
+        await SpeakSettingAsync(
+            lblSoundEffects.Text + " " +
+            OnOff(e.Value));
     }
 
-    private void OnMusicToggled(
+    // Background music switch.
+    private async void OnMusicToggled(
         object? sender,
         ToggledEventArgs e)
     {
@@ -100,9 +239,14 @@ public partial class SettingsPage : ContentPage
 
         SettingsService.MusicEnabled = e.Value;
         ShowSavedMessage();
+
+        await SpeakSettingAsync(
+            lblMusic.Text + " " +
+            OnOff(e.Value));
     }
 
-    private void OnVoiceHintsToggled(
+    // Voice hints switch.
+    private async void OnVoiceHintsToggled(
         object? sender,
         ToggledEventArgs e)
     {
@@ -111,9 +255,18 @@ public partial class SettingsPage : ContentPage
 
         SettingsService.VoiceHintsEnabled = e.Value;
         ShowSavedMessage();
+
+        // Speak once when enabling voice hints.
+        if (e.Value)
+        {
+            await SpeakSettingAsync(
+                lblVoiceHints.Text + " " +
+                OnOff(true));
+        }
     }
 
-    private void OnDarkModeToggled(
+    // Dark mode switch.
+    private async void OnDarkModeToggled(
         object? sender,
         ToggledEventArgs e)
     {
@@ -124,51 +277,105 @@ public partial class SettingsPage : ContentPage
 
         ApplyTheme();
         ShowSavedMessage();
+
+        await SpeakSettingAsync(
+            lblDarkMode.Text + " " +
+            OnOff(e.Value));
     }
 
     private static void ApplyTheme()
     {
-        if (Application.Current is not null)
+        if (Application.Current is null)
+            return;
+
+        Application.Current.UserAppTheme =
+            SettingsService.DarkModeEnabled
+                ? AppTheme.Dark
+                : AppTheme.Light;
+    }
+
+    private static string OnOff(bool enabled)
+    {
+        return LocalizationService.T(
+            enabled ? "on" : "off");
+    }
+
+    // Speak feedback only when voice hints are enabled.
+    private static async Task SpeakSettingAsync(string message)
+    {
+        if (!SettingsService.VoiceHintsEnabled)
+            return;
+
+        try
         {
-            Application.Current.UserAppTheme =
-                SettingsService.DarkModeEnabled
-                    ? AppTheme.Dark
-                    : AppTheme.Light;
+            await TextToSpeech.Default.SpeakAsync(message);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(
+                $"Voice feedback unavailable: {ex.Message}");
         }
     }
 
     private void ShowSavedMessage()
     {
-        lblSettingsMessage.Text = "Settings saved.";
+        lblSettingsMessage.Text =
+            SettingsService.Language == "zu"
+                ? "Izilungiselelo zigciniwe."
+                : "Settings saved.";
     }
 
+    // Restore all settings.
     private async void OnResetSettingsClicked(
         object? sender,
         EventArgs e)
     {
-        bool resetSettings = await DisplayAlert(
-            "Restore settings",
-            "Restore the default settings?",
-            "Restore",
-            "Cancel");
+        bool isZulu = SettingsService.Language == "zu";
 
-        if (!resetSettings)
+        bool confirmed = await DisplayAlert(
+            isZulu
+                ? "Buyisela Izilungiselelo"
+                : "Restore Settings",
+            isZulu
+                ? "Uyafuna ukubuyisela izilungiselelo zokuqala?"
+                : "Restore all default settings?",
+            isZulu ? "Buyisela" : "Restore",
+            isZulu ? "Khansela" : "Cancel");
+
+        if (!confirmed)
             return;
 
-        SettingsService.DefaultDifficulty = GameDifficulty.Easy;
+        SettingsService.DefaultDifficulty =
+            GameDifficulty.Easy;
+
         SettingsService.SoundEffectsEnabled = true;
         SettingsService.MusicEnabled = true;
         SettingsService.VoiceHintsEnabled = false;
         SettingsService.DarkModeEnabled = true;
 
-        LoadSettings();
-        ApplyTheme();
+        // Reset language to English.
+        LocalizationService.SetLanguage("en");
 
-        lblSettingsMessage.Text = "Default settings restored.";
+        LoadSettings();
+        UpdateLanguage();
+
+        lblSettingsMessage.Text =
+            "Default settings restored.";
     }
 
-    private async void OnBackClicked(object? sender, EventArgs e)
+    // Return to Home.
+    private async void OnBackClicked(
+        object? sender,
+        EventArgs e)
     {
-        await Navigation.PopAsync();
+        if (Navigation.NavigationStack.Count > 1)
+        {
+            await Navigation.PopAsync();
+        }
+        else if (Window is not null)
+        {
+            Window.Page = new NavigationPage(
+                new HomePage(playerAccountId));
+        }
     }
 }

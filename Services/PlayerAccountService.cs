@@ -178,4 +178,41 @@ public class PlayerAccountService
             .Where(account => account.Id == accountId)
             .FirstOrDefaultAsync();
     }
+
+
+    // Update the pilot name of an existing account.
+    public async Task<bool> UpdatePilotNameAsync(
+        int accountId,
+        string newPilotName)
+    {
+        await initializationTask;
+
+        newPilotName = newPilotName?.Trim() ?? "";
+
+        if (newPilotName.Length < 3)
+        {
+            throw new ArgumentException(
+                "Pilot name must contain at least 3 characters.");
+        }
+
+        if (newPilotName.Length > 30)
+        {
+            throw new ArgumentException(
+                "Pilot name cannot exceed 30 characters.");
+        }
+
+        PlayerAccount? account =
+            await GetAccountByIdAsync(accountId);
+
+        if (account is null)
+            return false;
+
+        account.PilotName = newPilotName;
+
+        int rowsUpdated =
+            await database.UpdateAsync(account);
+
+        return rowsUpdated > 0;
+    }
+
 }

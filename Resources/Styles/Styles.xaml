@@ -163,7 +163,7 @@
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
@@ -345,32 +345,9 @@
     </Style>
 
     <Style TargetType="Switch">
-        <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-        <Setter Property="ThumbColor" Value="{StaticResource White}" />
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Disabled">
-                        <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
-                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="On">
-                        <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray200}}" />
-                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Off">
-                        <VisualState.Setters>
-                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
+        <Setter Property="OnColor"
+                Value="{AppThemeBinding Light=#1689B8, Dark=#14B8EF}" />
+        <Setter Property="ThumbColor" Value="#FFFFFF" />
     </Style>
 
     <Style TargetType="TimePicker">
@@ -886,7 +863,7 @@
 
     <Style x:Key="PlainPageStyle" TargetType="ContentPage">
         <Setter Property="BackgroundColor"
-            Value="{StaticResource AppPageBackground}" />
+                Value="{AppThemeBinding Light=#EAF4FA, Dark=#03111D}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
         <Setter Property="Shell.NavBarIsVisible" Value="False" />
@@ -1123,31 +1100,28 @@
             Value="{AppThemeBinding Light=#073B5B, Dark=#C5F3FF}" />
     </Style>
 
-    <Style x:Key="PlayerOptionsHeadingStyle"
-       TargetType="Label">
+    <Style x:Key="PlayerOptionsHeadingStyle" TargetType="Label">
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="TextColor"
-            Value="{AppThemeBinding Light=#10283F, Dark=#FFFFFF}" />
+                Value="{AppThemeBinding Light=#09263B, Dark=#FFFFFF}" />
     </Style>
 
-    <Style x:Key="PlayerOptionsTextStyle"
-       TargetType="Label">
+    <Style x:Key="PlayerOptionsTextStyle" TargetType="Label">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="TextColor"
-            Value="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
+                Value="{AppThemeBinding Light=#40576D, Dark=#BCD4E7}" />
     </Style>
 
-    <Style x:Key="PlayerOptionsCardStyle"
-       TargetType="Border">
-        <Setter Property="Padding" Value="16" />
-        <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="Stroke"
-            Value="{AppThemeBinding Light=#A7C8DE, Dark=#24516F}" />
+    <Style x:Key="PlayerOptionsCardStyle" TargetType="Border">
         <Setter Property="BackgroundColor"
-            Value="{AppThemeBinding Light=#FFFFFF, Dark=#082D49}" />
+                Value="{AppThemeBinding Light=#FFFFFF, Dark=#082D49}" />
+        <Setter Property="Stroke"
+                Value="{AppThemeBinding Light=#1689B8, Dark=#14B8EF}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Padding" Value="16" />
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="16" />
@@ -1155,10 +1129,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="PlayerOptionsButtonStyle"
-       TargetType="Button">
+    <Style x:Key="PlayerOptionsButtonStyle" TargetType="Button">
         <Setter Property="TextColor" Value="White" />
         <Setter Property="BackgroundColor" Value="#007BB8" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light=#1689B8, Dark=#14B8EF}" />
+        <Setter Property="BorderWidth" Value="1" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="MinimumHeightRequest" Value="48" />
@@ -1184,10 +1159,10 @@
         <Setter Property="MinimumHeightRequest" Value="48" />
     </Style>
 
-    <Style x:Key="PlayerOptionsSwitchStyle"
-       TargetType="Switch">
-        <Setter Property="OnColor" Value="#007BB8" />
-        <Setter Property="ThumbColor" Value="#4FC3F7" />
+    <Style x:Key="PlayerOptionsSwitchStyle" TargetType="Switch">
+        <Setter Property="OnColor"
+                Value="{AppThemeBinding Light=#1689B8, Dark=#14B8EF}" />
+        <Setter Property="ThumbColor" Value="#FFFFFF" />
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>

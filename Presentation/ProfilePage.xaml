@@ -4,104 +4,150 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SkyLock.Presentation.ProfilePage"
     Title="Player Profile"
-    Style="{StaticResource PlayerOptionsPageStyle}"
-    Shell.NavBarIsVisible="False"
-    NavigationPage.HasNavigationBar="False">
+    Style="{StaticResource PlainPageStyle}"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*"
-          Style="{StaticResource PlayerOptionsLayoutStyle}">
+    <ScrollView>
 
-        <Button x:Name="btnBack"
+        <VerticalStackLayout
+            Style="{StaticResource SignInLayoutStyle}">
+
+            <!-- Back button -->
+            <Button
+                x:Name="btnBack"
                 Text="Back"
                 Clicked="OnBackClicked"
-                Style="{StaticResource PlayerOptionsBackStyle}" />
+                Style="{StaticResource BackButtonStyle}" />
 
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout
-                Style="{StaticResource PlayerOptionsStackStyle}">
+            <!-- Page title -->
+            <Label
+                Text="PLAYER PROFILE"
+                TextColor="White"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
 
-                <Label x:Name="lblProfileTitle"
-                       Text="Player Profile"
-                       Style="{StaticResource PlayerOptionsTitleStyle}" />
+            <Label
+                Text="Customize your pilot identity"
+                TextColor="White"
+                FontSize="14"
+                HorizontalTextAlignment="Center" />
 
-                <Image x:Name="imgCurrentAvatar"
-                       Style="{StaticResource PlayerAvatarPreviewStyle}" />
+            <!-- Selected avatar -->
+            <Border
+                Style="{StaticResource PlayerOptionsCardStyle}"
+                HorizontalOptions="Center"
+                Padding="10">
 
-                <Label x:Name="lblProfileDescription"
-                       Text="Choose your pilot avatar"
-                       Style="{StaticResource PlayerOptionsTextStyle}" />
+                <Image
+                    x:Name="imgCurrentAvatar"
+                    Style="{StaticResource PlayerAvatarPreviewStyle}" />
 
-                <Label x:Name="lblProfileHint"
-                       Text="Your selection is saved automatically on this device."
-                       Style="{StaticResource PlayerOptionsTextStyle}" />
+            </Border>
 
-                <Border Style="{StaticResource PlayerOptionsCardStyle}">
-                    <VerticalStackLayout
-                        Style="{StaticResource PlayerOptionsStackStyle}">
+            <!-- Pilot username -->
+            <Label
+                Text="PILOT USERNAME"
+                TextColor="White"
+                Style="{StaticResource PlayerOptionsHeadingStyle}" />
 
-                        <Label x:Name="lblAvatarHeading"
-                               Text="Available avatars"
-                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+            <Border Style="{StaticResource SignInFieldStyle}">
 
-                        <Grid ColumnDefinitions="*,*,*"
-                              RowDefinitions="Auto,Auto"
-                              ColumnSpacing="12"
-                              RowSpacing="12">
+                <Entry
+                    x:Name="txtPilotName"
+                    Placeholder="Enter your pilot name"
+                    MaxLength="30"
+                    Keyboard="Text"
+                    ReturnType="Done"
+                    Style="{StaticResource SignInEntryStyle}" />
 
-                            <ImageButton x:Name="btnAvatarMaleOne"
-                                         Grid.Row="0"
-                                         Grid.Column="0"
-                                         Source="avatar_male1.png"
-                                         StyleId="0"
-                                         Clicked="OnAvatarClicked"
-                                         SemanticProperties.Description="Select pilot avatar one"
-                                         Style="{StaticResource PlayerAvatarButtonStyle}" />
+            </Border>
 
-                            <ImageButton x:Name="btnAvatarMaleTwo"
-                                         Grid.Row="0"
-                                         Grid.Column="1"
-                                         Source="avatar_male2.png"
-                                         StyleId="1"
-                                         Clicked="OnAvatarClicked"
-                                         SemanticProperties.Description="Select pilot avatar two"
-                                         Style="{StaticResource PlayerAvatarButtonStyle}" />
+            <!-- Avatar selection -->
+            <Border Style="{StaticResource PlayerOptionsCardStyle}">
 
-                            <ImageButton x:Name="btnAvatarFemaleOne"
-                                         Grid.Row="0"
-                                         Grid.Column="2"
-                                         Source="avatar_female1.png"
-                                         StyleId="2"
-                                         Clicked="OnAvatarClicked"
-                                         SemanticProperties.Description="Select pilot avatar three"
-                                         Style="{StaticResource PlayerAvatarButtonStyle}" />
+                <VerticalStackLayout Spacing="14">
 
-                            <ImageButton x:Name="btnAvatarFemaleTwo"
-                                         Grid.Row="1"
-                                         Grid.Column="0"
-                                         Source="avatar_female2.png"
-                                         StyleId="3"
-                                         Clicked="OnAvatarClicked"
-                                         SemanticProperties.Description="Select pilot avatar four"
-                                         Style="{StaticResource PlayerAvatarButtonStyle}" />
+                    <Label
+                        Text="CHOOSE YOUR AVATAR"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource PlayerOptionsHeadingStyle}" />
 
-                            <ImageButton x:Name="btnAvatarNeutral"
-                                         Grid.Row="1"
-                                         Grid.Column="1"
-                                         Source="avatar_neutral.png"
-                                         StyleId="4"
-                                         Clicked="OnAvatarClicked"
-                                         SemanticProperties.Description="Select neutral avatar"
-                                         Style="{StaticResource PlayerAvatarButtonStyle}" />
+                    <Grid
+                        ColumnDefinitions="*,*,*,*,*"
+                        ColumnSpacing="6">
 
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
+                        <ImageButton
+                            x:Name="btnAvatarMaleOne"
+                            Grid.Column="0"
+                            Source="avatar_male1.png"
+                            StyleId="0"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
 
-                <Label x:Name="lblProfileMessage"
-                       Text=""
-                       Style="{StaticResource PlayerOptionsTextStyle}" />
+                        <ImageButton
+                            x:Name="btnAvatarMaleTwo"
+                            Grid.Column="1"
+                            Source="avatar_male2.png"
+                            StyleId="1"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
 
-            </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+                        <ImageButton
+                            x:Name="btnAvatarFemaleOne"
+                            Grid.Column="2"
+                            Source="avatar_female1.png"
+                            StyleId="2"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                        <ImageButton
+                            x:Name="btnAvatarFemaleTwo"
+                            Grid.Column="3"
+                            Source="avatar_female2.png"
+                            StyleId="3"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                        <ImageButton
+                            x:Name="btnAvatarNeutral"
+                            Grid.Column="4"
+                            Source="avatar_neutral.png"
+                            StyleId="4"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                    </Grid>
+
+                    <Label
+                        Text="Select an avatar, then save your changes."
+                        TextColor="White"
+                        FontSize="12"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- Save Changes -->
+            <Button
+                x:Name="btnSaveProfile"
+                Text="Save Changes"
+                Clicked="OnSaveProfileClicked"
+                Style="{StaticResource WelcomeSignInStyle}" />
+
+            <!-- Success or error message -->
+            <Label
+                x:Name="lblProfileMessage"
+                Text=""
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                FontSize="14" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
 </ContentPage>

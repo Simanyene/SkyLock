@@ -99,4 +99,18 @@
     <Color x:Key="SkyLockTextMuted">#FFFFFF</Color>
 
 
+    <!-- SkyLock light theme -->
+    <Color x:Key="SkyLockLightBackground">#EAF4FA</Color>
+    <Color x:Key="SkyLockLightCard">#FFFFFF</Color>
+    <Color x:Key="SkyLockLightText">#09263B</Color>
+    <Color x:Key="SkyLockLightBorder">#1689B8</Color>
+    <Color x:Key="SkyLockLightButton">#D8EFFB</Color>
+
+    <!-- SkyLock dark theme -->
+    <Color x:Key="SkyLockDarkBackground">#03111D</Color>
+    <Color x:Key="SkyLockDarkCard">#082D49</Color>
+    <Color x:Key="SkyLockDarkText">#FFFFFF</Color>
+    <Color x:Key="SkyLockDarkBorder">#14B8EF</Color>
+    <Color x:Key="SkyLockDarkButton">#073B5B</Color>
+
 </ResourceDictionary>

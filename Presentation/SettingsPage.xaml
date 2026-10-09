@@ -4,128 +4,218 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="SkyLock.Presentation.SettingsPage"
     Title="Settings"
-    Style="{StaticResource PlayerOptionsPageStyle}"
+    Style="{StaticResource PlainPageStyle}"
     Shell.NavBarIsVisible="False"
     NavigationPage.HasNavigationBar="False">
 
-    <Grid RowDefinitions="Auto,*"
-          Style="{StaticResource PlayerOptionsLayoutStyle}">
+    <ScrollView>
+        <VerticalStackLayout
+            Style="{StaticResource SignInLayoutStyle}"
+            Spacing="18">
 
-        <Button x:Name="btnBack"
+            <!-- Back -->
+            <Button
+                x:Name="btnBack"
                 Text="Back"
+                HorizontalOptions="Start"
                 Clicked="OnBackClicked"
-                Style="{StaticResource PlayerOptionsBackStyle}" />
+                Style="{StaticResource BackButtonStyle}" />
 
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout
-                Style="{StaticResource PlayerOptionsStackStyle}">
+            <!-- Title -->
+            <Label
+                x:Name="lblSettingsTitle"
+                Text="SETTINGS"
+                TextColor="White"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
 
-                <Label x:Name="lblSettingsTitle"
-                       Text="Settings"
-                       Style="{StaticResource PlayerOptionsTitleStyle}" />
+            <Label
+                x:Name="lblSettingsDescription"
+                Text="Personalise your flight."
+                TextColor="White"
+                HorizontalTextAlignment="Center" />
 
-                <Label x:Name="lblSettingsDescription"
-                       Text="Personalise your flight."
-                       Style="{StaticResource PlayerOptionsTextStyle}" />
+            <!-- Difficulty -->
+            <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                <VerticalStackLayout Spacing="12">
 
-                <Border Style="{StaticResource PlayerOptionsCardStyle}">
-                    <VerticalStackLayout
-                        Style="{StaticResource PlayerOptionsStackStyle}">
+                    <Label
+                        x:Name="lblDifficultyHeading"
+                        Text="DEFAULT DIFFICULTY"
+                        TextColor="White"
+                        Style="{StaticResource PlayerOptionsHeadingStyle}" />
 
-                        <Label x:Name="lblDifficultyHeading"
-                               Text="Default difficulty"
-                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+                    <Grid ColumnDefinitions="*,*,*"
+                          ColumnSpacing="8">
 
-                        <Picker x:Name="pkrDefaultDifficulty"
-                                Title="Select difficulty"
-                                SelectedIndexChanged="OnDifficultyChanged"
-                                Style="{StaticResource PlayerOptionsPickerStyle}">
-                            <Picker.Items>
-                                <x:String>Easy</x:String>
-                                <x:String>Medium</x:String>
-                                <x:String>Hard</x:String>
-                            </Picker.Items>
-                        </Picker>
+                        <Button
+                            x:Name="btnEasy"
+                            Grid.Column="0"
+                            Text="Easy"
+                            StyleId="Easy"
+                            Clicked="OnDifficultyClicked"
+                            Style="{StaticResource PlayerOptionsButtonStyle}" />
 
-                        <Label x:Name="lblDifficultyHint"
-                               Text="This level is selected when you open the difficulty page."
-                               Style="{StaticResource PlayerOptionsTextStyle}" />
+                        <Button
+                            x:Name="btnMedium"
+                            Grid.Column="1"
+                            Text="Medium"
+                            StyleId="Medium"
+                            Clicked="OnDifficultyClicked"
+                            Style="{StaticResource PlayerOptionsButtonStyle}" />
 
-                    </VerticalStackLayout>
-                </Border>
+                        <Button
+                            x:Name="btnHard"
+                            Grid.Column="2"
+                            Text="Hard"
+                            StyleId="Hard"
+                            Clicked="OnDifficultyClicked"
+                            Style="{StaticResource PlayerOptionsButtonStyle}" />
 
-                <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                    </Grid>
+
+                    <Label
+                        x:Name="lblDifficultyHint"
+                        Text="Choose your preferred difficulty."
+                        TextColor="White"
+                        FontSize="12" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Language -->
+            <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label
+                        x:Name="lblLanguageHeading"
+                        Text="LANGUAGE"
+                        TextColor="White"
+                        Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="10">
+
+                        <Button
+                            x:Name="btnEnglish"
+                            Grid.Column="0"
+                            Text="English"
+                            StyleId="en"
+                            Clicked="OnLanguageClicked"
+                            Style="{StaticResource PlayerOptionsButtonStyle}" />
+
+                        <Button
+                            x:Name="btnZulu"
+                            Grid.Column="1"
+                            Text="isiZulu"
+                            StyleId="zu"
+                            Clicked="OnLanguageClicked"
+                            Style="{StaticResource PlayerOptionsButtonStyle}" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Audio -->
+            <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label
+                        x:Name="lblAudioHeading"
+                        Text="AUDIO SETTINGS"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold" />
+
                     <Grid ColumnDefinitions="*,Auto"
                           RowDefinitions="Auto,Auto,Auto"
-                          RowSpacing="16"
+                          RowSpacing="18"
                           ColumnSpacing="12">
 
-                        <Label x:Name="lblSoundEffects"
-                               Grid.Row="0"
-                               Text="Sound effects"
-                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+                        <Label
+                            x:Name="lblSoundEffects"
+                            Grid.Row="0"
+                            Text="Sound effects"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
 
-                        <Switch x:Name="swtSoundEffects"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Toggled="OnSoundEffectsToggled"
-                                SemanticProperties.Description="Sound effects"
-                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+                        <Switch
+                            x:Name="swtSoundEffects"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Toggled="OnSoundEffectsToggled"
+                            Style="{StaticResource PlayerOptionsSwitchStyle}" />
 
-                        <Label x:Name="lblMusic"
-                               Grid.Row="1"
-                               Text="Background music"
-                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+                        <Label
+                            x:Name="lblMusic"
+                            Grid.Row="1"
+                            Text="Background music"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
 
-                        <Switch x:Name="swtMusic"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Toggled="OnMusicToggled"
-                                SemanticProperties.Description="Background music"
-                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+                        <Switch
+                            x:Name="swtMusic"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Toggled="OnMusicToggled"
+                            Style="{StaticResource PlayerOptionsSwitchStyle}" />
 
-                        <Label x:Name="lblVoiceHints"
-                               Grid.Row="2"
-                               Text="Voice hints"
-                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
+                        <Label
+                            x:Name="lblVoiceHints"
+                            Grid.Row="2"
+                            Text="Voice hints"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
 
-                        <Switch x:Name="swtVoiceHints"
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Toggled="OnVoiceHintsToggled"
-                                SemanticProperties.Description="Voice hints"
-                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
-
-                    </Grid>
-                </Border>
-
-                <Border Style="{StaticResource PlayerOptionsCardStyle}">
-                    <Grid ColumnDefinitions="*,Auto"
-                          ColumnSpacing="12">
-
-                        <Label x:Name="lblDarkMode"
-                               Text="Dark mode"
-                               Style="{StaticResource PlayerOptionsHeadingStyle}" />
-
-                        <Switch x:Name="swtDarkMode"
-                                Grid.Column="1"
-                                Toggled="OnDarkModeToggled"
-                                SemanticProperties.Description="Dark mode"
-                                Style="{StaticResource PlayerOptionsSwitchStyle}" />
+                        <Switch
+                            x:Name="swtVoiceHints"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Toggled="OnVoiceHintsToggled"
+                            Style="{StaticResource PlayerOptionsSwitchStyle}" />
 
                     </Grid>
-                </Border>
 
-                <Label x:Name="lblSettingsMessage"
-                       Text="Changes are saved automatically."
-                       Style="{StaticResource PlayerOptionsTextStyle}" />
+                </VerticalStackLayout>
+            </Border>
 
-                <Button x:Name="btnResetSettings"
-                        Text="Restore default settings"
-                        Clicked="OnResetSettingsClicked"
-                        Style="{StaticResource PlayerOptionsButtonStyle}" />
+            <!-- Appearance -->
+            <Border Style="{StaticResource PlayerOptionsCardStyle}">
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="12">
 
-            </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+                    <Label
+                        x:Name="lblDarkMode"
+                        Text="Dark mode"
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+
+                    <Switch
+                        x:Name="swtDarkMode"
+                        Grid.Column="1"
+                        Toggled="OnDarkModeToggled"
+                        Style="{StaticResource PlayerOptionsSwitchStyle}" />
+
+                </Grid>
+            </Border>
+
+            <!-- Status -->
+            <Label
+                x:Name="lblSettingsMessage"
+                Text="Changes are saved automatically."
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                FontSize="13" />
+
+            <!-- Reset -->
+            <Button
+                x:Name="btnResetSettings"
+                Text="Restore Default Settings"
+                Clicked="OnResetSettingsClicked"
+                Style="{StaticResource WelcomeGuestStyle}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
