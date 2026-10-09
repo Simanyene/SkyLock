@@ -22,7 +22,7 @@
                            Style="{StaticResource FeatureHeadingStyle}" />
 
                     <Label x:Name="lblMenuTagline"
-                           Text="{loc:Translate slogan}"
+                           Text="{loc:TranslateExtensionService Key=slogan}"
                            TextColor="White"
                            Style="{StaticResource WelcomeTaglineStyle}" />
 
@@ -70,59 +70,3 @@
                             Text="Home"
                             TextColor="White"
                             StyleId="Home"
-                            Clicked="OnMenuItemClicked"
-                            Style="{StaticResource HomeMenuButtonStyle}" />
-
-                    <Button x:Name="btnMenuPlay"
-                            Text="{loc:Translate play}"
-                            TextColor="White"
-                            StyleId="StartFlight"
-                            Clicked="OnMenuItemClicked"
-                            Style="{StaticResource HomeMenuButtonStyle}" />
-
-                    <Button x:Name="btnMenuInstructions"
-                            Text="{loc:Translate instructions}"
-                            TextColor="White"
-                            StyleId="HowToPlay"
-                            Clicked="OnMenuItemClicked"
-                            Style="{StaticResource HomeMenuButtonStyle}" />
-
-                    <Button x:Name="btnMenuRecords"
-                            Text="{loc:Translate records}"
-                            TextColor="White"
-                            StyleId="FlightRecords"
-                            Clicked="OnMenuItemClicked"
-                            Style="{StaticResource HomeMenuButtonStyle}" />
-
-                    <Button x:Name="btnMenuProfile"
-                            Text="{loc:Translate profile}"
-                            TextColor="White"
-                            StyleId="Profile"
-                            Clicked="OnMenuItemClicked"
-                            Style="{StaticResource HomeMenuButtonStyle}" />
-
-                    <Button x:Name="btnMenuSettings"
-                            Text="{loc:Translate settings}"
-                            TextColor="White"
-                            StyleId="Settings"
-                            Clicked="OnMenuItemClicked"
-                            Style="{StaticResource HomeMenuButtonStyle}" />
-
-                </VerticalStackLayout>
-
-            </ScrollView>
-
-            <!-- Sign out -->
-            <Button Grid.Row="4"
-                    x:Name="btnMenuSignOut"
-                    Text="{loc:Translate sign_out}"
-                    TextColor="White"
-                    StyleId="SignOut"
-                    Clicked="OnMenuItemClicked"
-                    Style="{StaticResource WelcomeGuestStyle}" />
-
-        </Grid>
-
-    </Border>
-
-</ContentView>
