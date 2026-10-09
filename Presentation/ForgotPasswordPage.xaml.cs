@@ -23,12 +23,16 @@ public partial class ForgotPasswordPage : ContentPage
         btnBack.Text = LocalizationService.T("back_to_login");
     }
 
-    private void OnInputChanged(object? sender, TextChangedEventArgs e)
+    private void OnInputChanged(
+        object? sender,
+        TextChangedEventArgs e)
     {
         lblError.IsVisible = false;
     }
 
-    private async void OnSendClicked(object? sender, EventArgs e)
+    private async void OnSendClicked(
+        object? sender,
+        EventArgs e)
     {
         if (isSending)
             return;
@@ -37,43 +41,55 @@ public partial class ForgotPasswordPage : ContentPage
 
         string email = txtEmail.Text?.Trim() ?? "";
 
+        // Validate the email address.
         if (!MailAddress.TryCreate(email, out var address)
             || address.Address != email)
         {
-            ShowError(LocalizationService.T("err_bad_email"));
+            ShowError("Please enter a valid email address.");
             txtEmail.Focus();
             return;
         }
 
         isSending = true;
-        Content.IsEnabled = false;
+        btnSend.IsEnabled = false;
+        btnBack.IsEnabled = false;
 
         try
         {
-            var account = await App.AccountService.GetAccountByEmailAsync(email);
+            // Check whether the account exists.
+            var account =
+                await App.AccountService
+                    .GetAccountByEmailAsync(email);
 
             if (account is null)
             {
-                ShowError(LocalizationService.T("reset_not_found"));
+                ShowError("No account was found with this email.");
                 return;
             }
 
-            // Password recovery is not connected yet, so tell the player honestly.
-            ShowError(LocalizationService.T("reset_unavailable"));
+            // A real reset service still needs to be connected.
+            ShowError(
+                "Password recovery is currently unavailable. " +
+                "Please try again later.");
         }
         catch (Exception exception)
         {
             System.Diagnostics.Debug.WriteLine(exception);
-            ShowError(LocalizationService.T("reset_unavailable"));
+
+            ShowError(
+                "Unable to process your request right now.");
         }
         finally
         {
             isSending = false;
-            Content.IsEnabled = true;
+            btnSend.IsEnabled = true;
+            btnBack.IsEnabled = true;
         }
     }
 
-    private async void OnBackClicked(object? sender, EventArgs e)
+    private async void OnBackClicked(
+        object? sender,
+        EventArgs e)
     {
         if (isSending)
             return;

@@ -1235,4 +1235,25 @@
         </Setter>
     </Style>
 
+    <!-- Forgot Password Page -->
+
+    <Style x:Key="ForgotPasswordLayoutStyle"
+       TargetType="VerticalStackLayout"
+       BasedOn="{StaticResource SignInLayoutStyle}">
+        <Setter Property="Spacing" Value="16" />
+    </Style>
+
+    <Style x:Key="ForgotPasswordLogoStyle"
+       TargetType="Label"
+       BasedOn="{StaticResource WelcomeLogoStyle}">
+        <Setter Property="Margin" Value="0,0,0,35" />
+    </Style>
+
+    <Style x:Key="ForgotPasswordErrorStyle"
+       TargetType="Label"
+       BasedOn="{StaticResource SignInErrorStyle}">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
 </ResourceDictionary>
