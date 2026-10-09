@@ -172,7 +172,10 @@ public sealed class LocalizationService : INotifyPropertyChanged
 
         ["back_title"] = "Leave the flight?",
         ["back_quit"] = "Quit flight",
-        ["back_side_menu"] = "Go to side menu"
+        ["back_side_menu"] = "Go to side menu",
+
+        ["send_reset"] = "Thumela Isicelo",
+        ["back_to_login"] = "Buyela ku-SignUp"
     };
 
     private static readonly Dictionary<string, string> Zulu = new()
@@ -295,6 +298,9 @@ public sealed class LocalizationService : INotifyPropertyChanged
 
         ["back_title"] = "Yeka indiza?",
         ["back_quit"] = "Yeka indiza",
-        ["back_side_menu"] = "Iya kumenyu yasemaceleni"
+        ["back_side_menu"] = "Iya kumenyu yasemaceleni",
+
+        ["send_reset"] = "Thumela Isicelo",
+        ["back_to_login"] = "Buyela ku-SignUp"
     };
 }

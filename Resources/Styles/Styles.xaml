@@ -1064,6 +1064,12 @@
         <Setter Property="Margin" Value="0,0,0,12" />
     </Style>
 
+    <!-- Side menu text: always white on the dark menu -->
+    <Style x:Key="SideMenuTextStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource WelcomeText}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+    </Style>
+
     <!-- Side menu -->
     <Style x:Key="SideMenuPanelStyle"
        TargetType="Border">

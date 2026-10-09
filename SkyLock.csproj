@@ -58,11 +58,13 @@
 	<ItemGroup>
 	  <MauiAsset Remove="Resources\Raw\halftime.m4a" />
 	  <MauiAsset Remove="Resources\Raw\loading_sound.wav" />
+	  <MauiAsset Remove="Resources\Raw\warning_sound.wav" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\Raw\halftime.m4a" />
 	  <EmbeddedResource Include="Resources\Raw\loading_sound.wav" />
+	  <EmbeddedResource Include="Resources\Raw\warning_sound.wav" />
 	</ItemGroup>
 
 	<ItemGroup>
