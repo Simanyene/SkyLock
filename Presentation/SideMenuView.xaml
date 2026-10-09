@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:SkyLock.Services"
+    x:Class="SkyLock.Presentation.SideMenuView">
+
+    <Border Style="{StaticResource SideMenuPanelStyle}">
+
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto"
+              RowSpacing="12">
+
+            <!-- Branding -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*,Auto">
+
+                <VerticalStackLayout Spacing="0">
+
+                    <Label x:Name="lblMenuTitle"
+                           Text="SKYLOCK"
+                           TextColor="White"
+                           Style="{StaticResource FeatureHeadingStyle}" />
+
+                    <Label x:Name="lblMenuTagline"
+                           Text="{loc:Translate slogan}"
+                           TextColor="White"
+                           Style="{StaticResource WelcomeTaglineStyle}" />
+
+                </VerticalStackLayout>
+
+                <Button Grid.Column="1"
+                        x:Name="btnCloseMenu"
+                        Text="Close"
+                        TextColor="White"
+                        Clicked="OnCloseClicked"
+                        Style="{StaticResource BackButtonStyle}" />
+
+            </Grid>
+
+            <!-- Avatar and player name -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Spacing="6"
+                                 HorizontalOptions="Center">
+
+                <Image x:Name="imgAvatar"
+                       Source="avatar_neutral.png"
+                       Style="{StaticResource ProfileAvatarStyle}" />
+
+                <Label x:Name="lblHello"
+                       Text="Welcome, Guest"
+                       TextColor="White"
+                       Style="{StaticResource FeatureHeadingStyle}"
+                       HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+
+            <!-- Menu instructions -->
+            <Label Grid.Row="2"
+                   Text="Choose where you want to go"
+                   TextColor="White"
+                   Style="{StaticResource FeatureBodyStyle}"
+                   HorizontalTextAlignment="Center" />
+
+            <!-- Navigation buttons -->
+            <ScrollView Grid.Row="3">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Button x:Name="btnMenuHome"
+                            Text="Home"
+                            TextColor="White"
+                            StyleId="Home"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuPlay"
+                            Text="{loc:Translate play}"
+                            TextColor="White"
+                            StyleId="StartFlight"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuInstructions"
+                            Text="{loc:Translate instructions}"
+                            TextColor="White"
+                            StyleId="HowToPlay"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuRecords"
+                            Text="{loc:Translate records}"
+                            TextColor="White"
+                            StyleId="FlightRecords"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuProfile"
+                            Text="{loc:Translate profile}"
+                            TextColor="White"
+                            StyleId="Profile"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuSettings"
+                            Text="{loc:Translate settings}"
+                            TextColor="White"
+                            StyleId="Settings"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                </VerticalStackLayout>
+
+            </ScrollView>
+
+            <!-- Sign out -->
+            <Button Grid.Row="4"
+                    x:Name="btnMenuSignOut"
+                    Text="{loc:Translate sign_out}"
+                    TextColor="White"
+                    StyleId="SignOut"
+                    Clicked="OnMenuItemClicked"
+                    Style="{StaticResource WelcomeGuestStyle}" />
+
+        </Grid>
+
+    </Border>
+
+</ContentView>

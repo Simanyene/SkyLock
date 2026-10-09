@@ -14,21 +14,22 @@
             <!-- Header -->
             <Grid ColumnDefinitions="Auto,*,Auto">
 
-                <Button x:Name="btnPause"
-                        Text="Pause"
-                        Style="{StaticResource BackButtonStyle}" />
+                <Button x:Name="btnBack"
+            Grid.Column="0"
+            Text="Back"
+            Style="{StaticResource BackButtonStyle}" />
 
                 <Label x:Name="lblGameTitle"
-                       Grid.Column="1"
-                       Text="SkyLock"
-                       Style="{StaticResource DifficultyNameStyle}"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center" />
+           Grid.Column="1"
+           Text="SkyLock"
+           Style="{StaticResource DifficultyNameStyle}"
+           HorizontalTextAlignment="Center"
+           VerticalTextAlignment="Center" />
 
-                <Button x:Name="btnChat"
-                        Grid.Column="2"
-                        Text="Chat"
-                        Style="{StaticResource BackButtonStyle}" />
+                <Button x:Name="btnPause"
+            Grid.Column="2"
+            Text="Pause"
+            Style="{StaticResource BackButtonStyle}" />
 
             </Grid>
 

@@ -51,8 +51,8 @@
 
                     <HorizontalStackLayout>
                     <CheckBox x:Name="chkRememberEmail"
-          SemanticProperties.Description="Remember my email"
-          Style="{StaticResource SignInCheckBoxStyle}" />
+                              SemanticProperties.Description="Remember my email"
+                              Style="{StaticResource SignInCheckBoxStyle}" />
 
                     <Label Text="Remember my email"
                            Style="{StaticResource SignInRememberStyle}" />
@@ -62,21 +62,22 @@
                        IsVisible="False"
                        Style="{StaticResource SignInErrorStyle}" />
 
-                    <Button Text="Sign In"
+                <Button Text="Sign In"
                         Clicked="OnSignInClicked"
                         Style="{StaticResource WelcomeSignInStyle}" />
 
-                    <Button Text="Forgot Password?"
-                        Clicked="OnForgotPasswordClicked"
-                        Style="{StaticResource SignInLinkStyle}" />
+                <Button Text="Back to Welcome"
+                        Clicked="OnBackClicked"
+                        Style="{StaticResource WelcomeGuestStyle}" />
 
-                    <Button Text="Register New Account"
+                <Button Text="Register New Account"
                         Clicked="OnRegisterClicked"
                         Style="{StaticResource SignInLinkStyle}" />
 
-                    <Button Text="Back to Welcome"
-                        Clicked="OnBackClicked"
-                        Style="{StaticResource WelcomeGuestStyle}" />
+                <Button Text="Forgot Password?"
+                        Clicked="OnForgotPasswordClicked"
+                        Style="{StaticResource SignInLinkStyle}" />
+
 
                 </VerticalStackLayout>
             </ScrollView>
