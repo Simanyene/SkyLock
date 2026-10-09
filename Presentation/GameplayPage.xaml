@@ -5,31 +5,42 @@
     xmlns:presentation="clr-namespace:SkyLock.Presentation"
     x:Class="SkyLock.Presentation.GameplayPage"
     Title="Flight"
-    Style="{StaticResource WelcomePageStyle}">
+    Style="{StaticResource WelcomePageStyle}"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
         <VerticalStackLayout
             Style="{StaticResource SignInLayoutStyle}">
 
             <!-- Header -->
-            <Grid ColumnDefinitions="Auto,*,Auto">
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="8">
 
-                <Button x:Name="btnBack"
-            Grid.Column="0"
-            Text="Back"
-            Style="{StaticResource BackButtonStyle}" />
+                <Button
+                    x:Name="btnBack"
+                    Grid.Column="0"
+                    Text="Back"
+                    TextColor="White"
+                    Clicked="OnBackClicked"
+                    Style="{StaticResource BackButtonStyle}" />
 
-                <Label x:Name="lblGameTitle"
-           Grid.Column="1"
-           Text="SkyLock"
-           Style="{StaticResource DifficultyNameStyle}"
-           HorizontalTextAlignment="Center"
-           VerticalTextAlignment="Center" />
+                <Label
+                    x:Name="lblGameTitle"
+                    Grid.Column="1"
+                    Text="SkyLock"
+                    TextColor="White"
+                    Style="{StaticResource DifficultyNameStyle}"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" />
 
-                <Button x:Name="btnPause"
-            Grid.Column="2"
-            Text="Pause"
-            Style="{StaticResource BackButtonStyle}" />
+                <Button
+                    x:Name="btnPause"
+                    Grid.Column="2"
+                    Text="Pause"
+                    TextColor="White"
+                    Clicked="OnPauseClicked"
+                    Style="{StaticResource BackButtonStyle}" />
 
             </Grid>
 
@@ -40,142 +51,197 @@
                 <Border Style="{StaticResource SignInFieldStyle}">
                     <VerticalStackLayout>
 
-                        <Label x:Name="lblAltitudeHeading"
-                               Text="ALTITUDE"
-                               Style="{StaticResource DifficultyDetailStyle}" />
+                        <Label
+                            x:Name="lblAltitudeHeading"
+                            Text="ALTITUDE"
+                            TextColor="White"
+                            Style="{StaticResource DifficultyDetailStyle}" />
 
-                        <Label x:Name="lblAltitude"
-                               Text="10,000 FT"
-                               Style="{StaticResource DifficultyNameStyle}" />
+                        <Label
+                            x:Name="lblAltitude"
+                            Text="10,000 FT"
+                            TextColor="White"
+                            Style="{StaticResource DifficultyNameStyle}" />
 
                     </VerticalStackLayout>
                 </Border>
 
-                <Border Grid.Column="1"
-                        Style="{StaticResource SignInFieldStyle}">
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource SignInFieldStyle}">
+
                     <VerticalStackLayout>
 
-                        <Label x:Name="lblTimeHeading"
-                               Text="TIME LEFT"
-                               Style="{StaticResource DifficultyDetailStyle}" />
+                        <Label
+                            x:Name="lblTimeHeading"
+                            Text="TIME LEFT"
+                            TextColor="White"
+                            Style="{StaticResource DifficultyDetailStyle}" />
 
-                        <Label x:Name="lblTimeLeft"
-                               Text="07:00"
-                               Style="{StaticResource DifficultyNameStyle}" />
+                        <Label
+                            x:Name="lblTimeLeft"
+                            Text="07:00"
+                            TextColor="White"
+                            Style="{StaticResource DifficultyNameStyle}" />
 
                     </VerticalStackLayout>
                 </Border>
 
             </Grid>
 
-            <!-- Warning during the final 30 seconds -->
+            <!-- Final 30-second warning -->
             <Grid Style="{StaticResource WarningSlotStyle}">
                 <presentation:WarningView
                     x:Name="cvTimeWarning" />
             </Grid>
 
-            <Label x:Name="lblCodeInstruction"
-                   Text="ENTER 3-DIGIT OVERRIDE"
-                   Style="{StaticResource WelcomeTaglineStyle}" />
+            <!-- Code instruction -->
+            <Label
+                x:Name="lblCodeInstruction"
+                Text="ENTER 3-DIGIT OVERRIDE"
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource WelcomeTaglineStyle}" />
 
-            <!-- Code boxes -->
+            <!-- Digit boxes -->
             <HorizontalStackLayout
                 HorizontalOptions="Center"
                 Spacing="8">
 
-                <Border Style="{StaticResource SignInFieldStyle}">
-                    <Label x:Name="lblDigitOne"
-                           Text="_"
-                           Style="{StaticResource DifficultyNameStyle}" />
+                <Border
+                    x:Name="brdDigitOne"
+                    Style="{StaticResource SignInFieldStyle}">
+                    <Label
+                        x:Name="lblDigitOne"
+                        Text="_"
+                        TextColor="White"
+                        Style="{StaticResource DifficultyNameStyle}" />
                 </Border>
 
-                <Border Style="{StaticResource SignInFieldStyle}">
-                    <Label x:Name="lblDigitTwo"
-                           Text="_"
-                           Style="{StaticResource DifficultyNameStyle}" />
+                <Border
+                    x:Name="brdDigitTwo"
+                    Style="{StaticResource SignInFieldStyle}">
+                    <Label
+                        x:Name="lblDigitTwo"
+                        Text="_"
+                        TextColor="White"
+                        Style="{StaticResource DifficultyNameStyle}" />
                 </Border>
 
-                <Border Style="{StaticResource SignInFieldStyle}">
-                    <Label x:Name="lblDigitThree"
-                           Text="_"
-                           Style="{StaticResource DifficultyNameStyle}" />
+                <Border
+                    x:Name="brdDigitThree"
+                    Style="{StaticResource SignInFieldStyle}">
+                    <Label
+                        x:Name="lblDigitThree"
+                        Text="_"
+                        TextColor="White"
+                        Style="{StaticResource DifficultyNameStyle}" />
                 </Border>
 
-                <Border x:Name="brdDigitFour"
-                        IsVisible="False"
-                        Style="{StaticResource SignInFieldStyle}">
-                    <Label x:Name="lblDigitFour"
-                           Text="_"
-                           Style="{StaticResource DifficultyNameStyle}" />
+                <Border
+                    x:Name="brdDigitFour"
+                    IsVisible="False"
+                    Style="{StaticResource SignInFieldStyle}">
+                    <Label
+                        x:Name="lblDigitFour"
+                        Text="_"
+                        TextColor="White"
+                        Style="{StaticResource DifficultyNameStyle}" />
                 </Border>
 
-                <Border x:Name="brdDigitFive"
-                        IsVisible="False"
-                        Style="{StaticResource SignInFieldStyle}">
-                    <Label x:Name="lblDigitFive"
-                           Text="_"
-                           Style="{StaticResource DifficultyNameStyle}" />
+                <Border
+                    x:Name="brdDigitFive"
+                    IsVisible="False"
+                    Style="{StaticResource SignInFieldStyle}">
+                    <Label
+                        x:Name="lblDigitFive"
+                        Text="_"
+                        TextColor="White"
+                        Style="{StaticResource DifficultyNameStyle}" />
                 </Border>
 
             </HorizontalStackLayout>
 
-            <!-- Feedback -->
+            <!-- Hits and matches -->
             <Border Style="{StaticResource SignInFieldStyle}">
                 <Grid ColumnDefinitions="*,*">
 
-                    <Label x:Name="lblHits"
-                           Text="HITS: —"
-                           Style="{StaticResource SignInRememberStyle}" />
+                    <Label
+                        x:Name="lblHits"
+                        Text="HITS: —"
+                        TextColor="White"
+                        Style="{StaticResource SignInRememberStyle}" />
 
-                    <Label x:Name="lblMatches"
-                           Grid.Column="1"
-                           Text="MATCHES: —"
-                           HorizontalTextAlignment="End"
-                           Style="{StaticResource SignInRememberStyle}" />
+                    <Label
+                        x:Name="lblMatches"
+                        Grid.Column="1"
+                        Text="MATCHES: —"
+                        TextColor="White"
+                        HorizontalTextAlignment="End"
+                        Style="{StaticResource SignInRememberStyle}" />
 
                 </Grid>
             </Border>
 
-            <Label x:Name="lblGameMessage"
-                   Text="Enter a code using different digits."
-                   Style="{StaticResource SignInRememberStyle}" />
+            <!-- Game feedback -->
+            <Label
+                x:Name="lblGameMessage"
+                Text="Enter a code using different digits."
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource SignInRememberStyle}" />
 
-            <!-- Number buttons are created in the C# constructor -->
-            <Grid x:Name="grdKeypad"
-                  ColumnDefinitions="*,*,*"
-                  RowDefinitions="Auto,Auto,Auto,Auto"
-                  ColumnSpacing="8"
-                  RowSpacing="8">
+            <!-- Number keypad -->
+            <Grid
+                x:Name="grdKeypad"
+                ColumnDefinitions="*,*,*"
+                RowDefinitions="Auto,Auto,Auto,Auto"
+                ColumnSpacing="8"
+                RowSpacing="8">
 
-                <Button x:Name="btnDelete"
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        Text="Delete"
-                        Style="{StaticResource WelcomeGuestStyle}" />
+                <!-- Numbers 0-9 are added in C# -->
 
-                <Button x:Name="btnEnter"
-                        Grid.Row="3"
-                        Grid.Column="2"
-                        Text="Enter"
-                        Style="{StaticResource WelcomeSignInStyle}" />
+                <Button
+                    x:Name="btnDelete"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Delete"
+                    TextColor="White"
+                    Clicked="OnDeleteClicked"
+                    Style="{StaticResource WelcomeGuestStyle}" />
+
+                <Button
+                    x:Name="btnEnter"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Text="Enter"
+                    TextColor="White"
+                    Clicked="OnEnterClicked"
+                    Style="{StaticResource WelcomeSignInStyle}" />
 
             </Grid>
 
             <!-- Guess history -->
             <Border Style="{StaticResource SignInFieldStyle}">
-                <VerticalStackLayout>
+                <VerticalStackLayout Spacing="8">
 
-                    <Label x:Name="lblGuessHistoryHeading"
-                           Text="GUESS HISTORY"
-                           Style="{StaticResource WelcomeTaglineStyle}" />
+                    <Label
+                        x:Name="lblGuessHistoryHeading"
+                        Text="GUESS HISTORY"
+                        TextColor="White"
+                        Style="{StaticResource WelcomeTaglineStyle}" />
 
-                    <Label x:Name="lblGuessCount"
-                           Text="Guesses: 0"
-                           Style="{StaticResource SignInRememberStyle}" />
+                    <Label
+                        x:Name="lblGuessCount"
+                        Text="Guesses: 0"
+                        TextColor="White"
+                        Style="{StaticResource SignInRememberStyle}" />
 
-                    <Label x:Name="lblGuessHistory"
-                           Text="Your guesses will appear here."
-                           Style="{StaticResource DifficultyDetailStyle}" />
+                    <Label
+                        x:Name="lblGuessHistory"
+                        Text="Your guesses will appear here."
+                        TextColor="White"
+                        Style="{StaticResource DifficultyDetailStyle}" />
 
                 </VerticalStackLayout>
             </Border>
