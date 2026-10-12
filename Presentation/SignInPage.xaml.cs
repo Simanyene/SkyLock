@@ -93,7 +93,7 @@ public partial class SignInPage : ContentPage
 
             // Check the password without blocking the screen.
             bool passwordIsCorrect = await Task.Run(() =>
-                PasswordService.VerifyPassword(
+                PasswordHashService.VerifyPassword(
                     password,
                     account.PasswordHash,
                     account.PasswordSalt));
@@ -145,17 +145,13 @@ public partial class SignInPage : ContentPage
                 btnSignIn.Text = "Sign In";
         }
     }
-
     private async void OnForgotPasswordClicked(
-        object? sender, EventArgs e)
+    object? sender, EventArgs e)
     {
         if (isSigningIn)
             return;
 
-        await DisplayAlert(
-            "Forgot Password",
-            "Password recovery is not available yet.",
-            "OK");
+        await Navigation.PushModalAsync(new ForgotPasswordPage());
     }
 
     private async void OnRegisterClicked(

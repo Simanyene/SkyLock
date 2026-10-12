@@ -1,4 +1,6 @@
+using SkyLock.Models;
 using SkyLock.Services;
+
 namespace SkyLock.Presentation;
 
 public partial class DifficultyPage : ContentPage
@@ -22,11 +24,11 @@ public partial class DifficultyPage : ContentPage
 
         switch (SettingsService.DefaultDifficulty)
         {
-            case "Medium":
+            case GameDifficulty.Medium:
                 SelectDifficulty("Medium", 4, 240);
                 break;
 
-            case "Hard":
+            case GameDifficulty.Hard:
                 SelectDifficulty("Hard", 5, 120);
                 break;
 
@@ -38,12 +40,12 @@ public partial class DifficultyPage : ContentPage
 
     private void OnEasyTapped(object? sender, TappedEventArgs e)
     {
-        SelectDifficulty("Easy", 3, 420);
+        SelectDifficulty("Easy", 3, 240);
     }
 
     private void OnMediumTapped(object? sender, TappedEventArgs e)
     {
-        SelectDifficulty("Medium", 4, 240);
+        SelectDifficulty("Medium", 4, 180);
     }
 
     private void OnHardTapped(object? sender, TappedEventArgs e)

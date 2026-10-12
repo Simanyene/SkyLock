@@ -41,7 +41,7 @@
                                Style="{StaticResource HowToPlayBodyStyle}" />
 
                         <Label x:Name="lblDifficultyDetails"
-                               Text="Easy: 3 digits • 7 minutes&#10;Medium: 4 digits • 4 minutes&#10;Hard: 5 digits • 2 minutes"
+                               Text="Easy: 3 digits • 4 minutes&#10;Medium: 4 digits • 3 minutes&#10;Hard: 5 digits • 2 minutes"
                                Style="{StaticResource HowToPlayBodyStyle}" />
 
                     </VerticalStackLayout>

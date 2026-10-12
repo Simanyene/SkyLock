@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.ResultsPage"
+    Title="Flight Results"
+    Style="{StaticResource WelcomePageStyle}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Style="{StaticResource SignInLayoutStyle}">
+
+            <Label x:Name="lblResultsLogo"
+                   Text="SkyLock"
+                   Style="{StaticResource WelcomeLogoStyle}" />
+
+            <!-- Shown when the player wins -->
+            <Border x:Name="brdSuccessPanel"
+                    IsVisible="False"
+                    Style="{StaticResource DifficultyEasyStyle}">
+
+                <VerticalStackLayout
+                    Style="{StaticResource HowToPlayCardContentStyle}">
+
+                    <Label x:Name="lblSuccessTitle"
+                           Text="CODE ACCEPTED!"
+                           Style="{StaticResource DifficultyNameStyle}" />
+
+                    <Label x:Name="lblControlRestored"
+                           Text="Flight Control Restored"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblAutopilot"
+                           Text="Autopilot Engaged"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblAircraftStabilized"
+                           Text="Aircraft Stabilized"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Shown when time runs out -->
+            <Border x:Name="brdGameOverPanel"
+                    IsVisible="False"
+                    Style="{StaticResource DifficultyHardStyle}">
+
+                <VerticalStackLayout
+                    Style="{StaticResource HowToPlayCardContentStyle}">
+
+                    <Label x:Name="lblGameOverTitle"
+                           Text="GAME OVER"
+                           Style="{StaticResource DifficultyNameStyle}" />
+
+                    <Label x:Name="lblGameOverDescription"
+                           Text="Time ran out before you could restore flight control."
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Details shared by both outcomes -->
+            <Border Style="{StaticResource SignInFieldStyle}">
+                <VerticalStackLayout
+                    Style="{StaticResource HowToPlayCardContentStyle}">
+
+                    <Label x:Name="lblDifficulty"
+                           Text="Difficulty: —"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblGuesses"
+                           Text="Guesses used: —"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblTimeTaken"
+                           Text="Time taken: —"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblTimeRemaining"
+                           Text="Time remaining: —"
+                           Style="{StaticResource SignInRememberStyle}" />
+
+                    <Label x:Name="lblSecretCode"
+                           Text="Secret code: —"
+                           Style="{StaticResource DifficultyNameStyle}" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Label x:Name="lblSaveStatus"
+                   IsVisible="False"
+                   Style="{StaticResource SignInErrorStyle}" />
+
+            <Button x:Name="btnPlayAgain"
+                    Text="Play Again"
+                    Style="{StaticResource WelcomeSignInStyle}" />
+
+            <Button x:Name="btnReturnHome"
+                    Text="Return Home"
+                    Style="{StaticResource WelcomeGuestStyle}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

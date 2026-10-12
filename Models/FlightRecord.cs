@@ -12,10 +12,10 @@ public class FlightRecord
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    // Identifies the account. Null means a guest played.
+    // Null means the game was played as a guest.
     public int? PlayerAccountId { get; set; }
 
-    public string Difficulty { get; set; } = "";
+    public string Difficulty { get; set; } = "Easy";
 
     public int DigitCount { get; set; }
 

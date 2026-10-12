@@ -22,13 +22,15 @@
                 <Label Text="Crack the code. Restore the control."
                        Style="{StaticResource WelcomeTaglineStyle}" />
 
+                <!-- Pilot name -->
                 <Border Style="{StaticResource SignInFieldStyle}">
-                    <Entry x:Name="txtGamerName"
-                           Placeholder="Gamer Name"
+                    <Entry x:Name="txtPilotName"
+                           Placeholder="Pilot Name"
                            MaxLength="20"
                            Style="{StaticResource SignInEntryStyle}" />
                 </Border>
 
+                <!-- Email address -->
                 <Border Style="{StaticResource SignInFieldStyle}">
                     <Entry x:Name="txtEmail"
                            Placeholder="Email"
@@ -36,20 +38,44 @@
                            Style="{StaticResource SignInEntryStyle}" />
                 </Border>
 
+                <!-- Password with Show/Hide button -->
                 <Border Style="{StaticResource SignInFieldStyle}">
-                    <Entry x:Name="txtPassword"
-                           Placeholder="Password"
-                           IsPassword="True"
-                           MaxLength="128"
-                           Style="{StaticResource SignInEntryStyle}" />
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <Entry x:Name="txtPassword"
+                               Grid.Column="0"
+                               Placeholder="Password"
+                               IsPassword="True"
+                               MaxLength="128"
+                               Style="{StaticResource SignInEntryStyle}" />
+
+                        <Button x:Name="btnShowPassword"
+                                Grid.Column="1"
+                                Text="Show"
+                                Clicked="OnShowPasswordClicked"
+                                Style="{StaticResource SignInLinkStyle}" />
+
+                    </Grid>
                 </Border>
 
+                <!-- Confirm password with Show/Hide button -->
                 <Border Style="{StaticResource SignInFieldStyle}">
-                    <Entry x:Name="txtConfirmPassword"
-                           Placeholder="Confirm Password"
-                           IsPassword="True"
-                           MaxLength="128"
-                           Style="{StaticResource SignInEntryStyle}" />
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <Entry x:Name="txtConfirmPassword"
+                               Grid.Column="0"
+                               Placeholder="Confirm Password"
+                               IsPassword="True"
+                               MaxLength="128"
+                               Style="{StaticResource SignInEntryStyle}" />
+
+                        <Button x:Name="btnShowConfirmPassword"
+                                Grid.Column="1"
+                                Text="Show"
+                                Clicked="OnShowConfirmPasswordClicked"
+                                Style="{StaticResource SignInLinkStyle}" />
+
+                    </Grid>
                 </Border>
 
                 <Label x:Name="lblError"
@@ -57,9 +83,9 @@
                        Style="{StaticResource SignInErrorStyle}" />
 
                 <Button x:Name="btnCreateAccount"
-        Text="Create Account"
-        Clicked="OnCreateAccountClicked"
-        Style="{StaticResource WelcomeSignInStyle}" />
+                        Text="Create Account"
+                        Clicked="OnCreateAccountClicked"
+                        Style="{StaticResource WelcomeSignInStyle}" />
 
                 <Label Text="Already have an account?"
                        Style="{StaticResource WelcomeTaglineStyle}" />
@@ -67,7 +93,7 @@
                 <Button x:Name="btnBackToSignIn"
                         Text="Back to Sign In"
                         Clicked="OnBackToSignInClicked"
-                         Style="{StaticResource SignInLinkStyle}" />
+                        Style="{StaticResource SignInLinkStyle}" />
 
             </VerticalStackLayout>
         </ScrollView>

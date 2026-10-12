@@ -40,7 +40,7 @@
                             <Label Text="Easy"
                                    Style="{StaticResource DifficultyNameStyle}" />
 
-                            <Label Text="3 digits · 7 minutes"
+                            <Label Text="3 digits · 4 minutes"
                                    Style="{StaticResource DifficultyDetailStyle}" />
 
                             <Label Text="More time to think"
@@ -68,7 +68,7 @@
                             <Label Text="Medium"
                                    Style="{StaticResource DifficultyNameStyle}" />
 
-                            <Label Text="4 digits · 4 minutes"
+                            <Label Text="4 digits · 3 minutes"
                                    Style="{StaticResource DifficultyDetailStyle}" />
 
                             <Label Text="A greater challenge"

@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:presentation="clr-namespace:SkyLock.Presentation"
     x:Class="SkyLock.Presentation.HomePage"
     Title="Home"
-    Style="{StaticResource HomePageStyle}">
+    Style="{StaticResource HomePageStyle}"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{StaticResource AppPageBackground}">
 
-    <Grid>
-        <Image Source="home_background.png"
-               Style="{StaticResource WelcomeBackgroundStyle}" />
+    <Grid BackgroundColor="{StaticResource AppPageBackground}">
 
-        <Grid RowDefinitions="Auto,*,Auto,Auto"
-              Style="{StaticResource HomeLayoutStyle}">
+        <!-- Home background image -->
+        <Image
+            Source="home_background.png"
+            Style="{StaticResource WelcomeBackgroundStyle}" />
+
+        <!-- Main Home content -->
+        <Grid
+            x:Name="grdHomeContent"
+            RowDefinitions="Auto,*,Auto,Auto"
+            Style="{StaticResource HomeLayoutStyle}">
 
             <VerticalStackLayout
                 Grid.Row="0"
                 Style="{StaticResource HomeHeaderStyle}">
 
-                <Label x:Name="lblHomeTitle"
-                       Text="SkyLock"
-                       Style="{StaticResource HomeTitleStyle}" />
+                <Button
+                    x:Name="btnMenu"
+                    Text="Menu"
+                    Clicked="OnOpenMenuClicked"
+                    Style="{StaticResource BackButtonStyle}" />
 
-                <Label x:Name="lblHomeSubtitle"
-                       Text="Crack the code. Restore the control."
-                       Style="{StaticResource HomeSubtitleStyle}" />
+                <Label
+                    x:Name="lblHomeTitle"
+                    Text="SkyLock"
+                    Style="{StaticResource HomeTitleStyle}" />
+
+                <Label
+                    x:Name="lblHomeSubtitle"
+                    Text="Crack the code. Restore the control."
+                    Style="{StaticResource HomeSubtitleStyle}" />
 
             </VerticalStackLayout>
 
@@ -31,32 +50,65 @@
                 Grid.Row="2"
                 Style="{StaticResource HomeButtonsStyle}">
 
-                <Button x:Name="btnStartFlight"
-                        Text="Start Flight"
-                        Clicked="OnStartFlightClicked"
-                        Style="{StaticResource HomeStartButtonStyle}" />
+                <Button
+                    x:Name="btnStartFlight"
+                    Text="Start Flight"
+                    Clicked="OnStartFlightClicked"
+                    Style="{StaticResource HomeStartButtonStyle}" />
 
-                <Button x:Name="btnHowToPlay"
-                        Text="How to Play"
-                        Clicked="OnHowToPlayClicked"
-                        Style="{StaticResource HomeMenuButtonStyle}" />
-              
-                <Button x:Name="btnFlightRecords"
-                        Text="Flight Records"
-                        Clicked="OnFlightRecordsClicked"
-                        Style="{StaticResource HomeMenuButtonStyle}" />
- 
-                <Button x:Name="btnSettings"
-                        Text="Settings"
-                        Style="{StaticResource HomeMenuButtonStyle}" />
+                <Button
+                    x:Name="btnHowToPlay"
+                    Text="How to Play"
+                    Clicked="OnHowToPlayClicked"
+                    Style="{StaticResource HomeMenuButtonStyle}" />
+
+                <Button
+                    x:Name="btnBack"
+                    Text="Back"
+                    Clicked="OnBackClicked"
+                    Style="{StaticResource HomeMenuButtonStyle}" />
 
             </VerticalStackLayout>
 
-            <Label Grid.Row="3"
-                   x:Name="lblHomeFooter"
-                   Text="EVERY SECOND COUNTS"
-                   Style="{StaticResource HomeFooterStyle}" />
+            <Label
+                Grid.Row="3"
+                x:Name="lblHomeFooter"
+                Text="EVERY SECOND COUNTS"
+                Style="{StaticResource HomeFooterStyle}" />
 
         </Grid>
+
+        <!-- Full-screen side menu overlay -->
+        <Grid
+            x:Name="grdMenuOverlay"
+            IsVisible="False"
+            BackgroundColor="#99000000"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <!-- Dark backdrop outside the menu -->
+            <BoxView
+                BackgroundColor="#99000000"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="OnMenuBackdropTapped" />
+                </BoxView.GestureRecognizers>
+
+            </BoxView>
+
+            <!-- Existing SkyLock side menu -->
+            <presentation:SideMenuView
+                x:Name="sideMenuView"
+                HorizontalOptions="Start"
+                VerticalOptions="Fill"
+                CloseRequested="OnMenuCloseRequested"
+                MenuItemSelected="OnMenuItemSelected" />
+
+        </Grid>
+
     </Grid>
+
 </ContentPage>

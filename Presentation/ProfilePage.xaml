@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SkyLock.Presentation.ProfilePage"
+    Title="Player Profile"
+    Style="{StaticResource PlainPageStyle}"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Style="{StaticResource SignInLayoutStyle}">
+
+            <!-- Back button -->
+            <Button
+                x:Name="btnBack"
+                Text="Back"
+                Clicked="OnBackClicked"
+                Style="{StaticResource BackButtonStyle}" />
+
+            <!-- Page title -->
+            <Label
+                Text="PLAYER PROFILE"
+                TextColor="White"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Text="Customize your pilot identity"
+                TextColor="White"
+                FontSize="14"
+                HorizontalTextAlignment="Center" />
+
+            <!-- Selected avatar -->
+            <Border
+                Style="{StaticResource PlayerOptionsCardStyle}"
+                HorizontalOptions="Center"
+                Padding="10">
+
+                <Image
+                    x:Name="imgCurrentAvatar"
+                    Style="{StaticResource PlayerAvatarPreviewStyle}" />
+
+            </Border>
+
+            <!-- Pilot username -->
+            <Label
+                Text="PILOT USERNAME"
+                TextColor="White"
+                Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+            <Border Style="{StaticResource SignInFieldStyle}">
+
+                <Entry
+                    x:Name="txtPilotName"
+                    Placeholder="Enter your pilot name"
+                    MaxLength="30"
+                    Keyboard="Text"
+                    ReturnType="Done"
+                    Style="{StaticResource SignInEntryStyle}" />
+
+            </Border>
+
+            <!-- Avatar selection -->
+            <Border Style="{StaticResource PlayerOptionsCardStyle}">
+
+                <VerticalStackLayout Spacing="14">
+
+                    <Label
+                        Text="CHOOSE YOUR AVATAR"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource PlayerOptionsHeadingStyle}" />
+
+                    <Grid
+                        ColumnDefinitions="*,*,*,*,*"
+                        ColumnSpacing="6">
+
+                        <ImageButton
+                            x:Name="btnAvatarMaleOne"
+                            Grid.Column="0"
+                            Source="avatar_male1.png"
+                            StyleId="0"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                        <ImageButton
+                            x:Name="btnAvatarMaleTwo"
+                            Grid.Column="1"
+                            Source="avatar_male2.png"
+                            StyleId="1"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                        <ImageButton
+                            x:Name="btnAvatarFemaleOne"
+                            Grid.Column="2"
+                            Source="avatar_female1.png"
+                            StyleId="2"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                        <ImageButton
+                            x:Name="btnAvatarFemaleTwo"
+                            Grid.Column="3"
+                            Source="avatar_female2.png"
+                            StyleId="3"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                        <ImageButton
+                            x:Name="btnAvatarNeutral"
+                            Grid.Column="4"
+                            Source="avatar_neutral.png"
+                            StyleId="4"
+                            Clicked="OnAvatarClicked"
+                            Style="{StaticResource PlayerAvatarButtonStyle}" />
+
+                    </Grid>
+
+                    <Label
+                        Text="Select an avatar, then save your changes."
+                        TextColor="White"
+                        FontSize="12"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- Save Changes -->
+            <Button
+                x:Name="btnSaveProfile"
+                Text="Save Changes"
+                Clicked="OnSaveProfileClicked"
+                Style="{StaticResource WelcomeSignInStyle}" />
+
+            <!-- Success or error message -->
+            <Label
+                x:Name="lblProfileMessage"
+                Text=""
+                TextColor="White"
+                HorizontalTextAlignment="Center"
+                FontSize="14" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
