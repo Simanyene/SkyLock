@@ -70,3 +70,59 @@
                             Text="Home"
                             TextColor="White"
                             StyleId="Home"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuPlay"
+                            Text="{loc:TranslateExtensionService Key=play}"
+                            TextColor="White"
+                            StyleId="StartFlight"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuInstructions"
+                            Text="{loc:TranslateExtensionService Key=instructions}"
+                            TextColor="White"
+                            StyleId="HowToPlay"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuRecords"
+                            Text="{loc:TranslateExtensionService Key=records}"
+                            TextColor="White"
+                            StyleId="FlightRecords"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuProfile"
+                            Text="{loc:TranslateExtensionService Key=profile}"
+                            TextColor="White"
+                            StyleId="Profile"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                    <Button x:Name="btnMenuSettings"
+                            Text="{loc:TranslateExtensionService Key=settings}"
+                            TextColor="White"
+                            StyleId="Settings"
+                            Clicked="OnMenuItemClicked"
+                            Style="{StaticResource HomeMenuButtonStyle}" />
+
+                </VerticalStackLayout>
+
+            </ScrollView>
+
+            <!-- Sign out -->
+            <Button Grid.Row="4"
+                    x:Name="btnMenuSignOut"
+                    Text="{loc:TranslateExtensionService Key=sign_out}"
+                    TextColor="White"
+                    StyleId="SignOut"
+                    Clicked="OnMenuItemClicked"
+                    Style="{StaticResource WelcomeGuestStyle}" />
+
+        </Grid>
+
+    </Border>
+
+</ContentView>
